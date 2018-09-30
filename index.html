@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html style="padding-bottom: 54px;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<title>放置江湖主动查询表</title>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/activeSkill.js"></script>
+<script src="js/version.js"></script>
+
+<!--[if IE]>
+		
+		<style type="text/css">			
+			li.purchase a {
+				padding-top: 5px;
+				background-position: 0px -4px;
+			}
+			
+			li.remove_frame a {
+				padding-top: 5px;
+				background-position: 0px -3px;
+			}						
+		</style>
+		
+    <![endif]-->
+    <style type="text/css">
+      body {
+        font-family: arial;
+      }
+
+      table {
+        border: 1px solid #ccc;
+        width: 80%;
+        margin:0;
+        padding:0;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin: 0 auto;
+      }
+
+      table tr {
+        border: 1px solid #ddd;
+        padding: 5px;
+      }
+
+      table th, table td {
+        padding: 10px;
+        text-align: center;
+      }
+
+      table th {
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 1px;
+      }
+
+      @media screen and (max-width: 600px) {
+
+        table {
+          border: 0;
+        }
+
+        table thead {
+          display: none;
+        }
+
+        table tr {
+          margin-bottom: 10px;
+          display: block;
+          border-bottom: 2px solid #ddd;
+        }
+
+        table td {
+          display: block;
+          text-align: right;
+          font-size: 13px;
+          border-bottom: 1px dotted #ccc;
+        }
+
+        table td:last-child {
+          border-bottom: 0;
+        }
+
+        table td:before {
+          content: attr(data-label);
+          float: left;
+          text-transform: uppercase;
+          font-weight: bold;
+        }
+      }
+      .select {
+        width: 35%;
+        display: inline-block;
+        position: relative;
+        vertical-align: middle;
+        padding: 0;
+        overflow: hidden;
+        background: #fff;
+        color: #555;
+        border: 1px solid #aaa;
+        text-shadow: none;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        -moz-transition: box-shadow 0.25s ease;
+        -o-transition: box-shadow 0.25s ease;
+        -webkit-transition: box-shadow 0.25s ease;
+        transition: box-shadow 0.25s ease;
+      }
+      .select:hover {
+        -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+      }
+      .select:before {
+        position: absolute;
+        top: 0.5em;
+        right: 0.5em;
+        pointer-events: none;
+      }
+      .select select {
+        cursor: pointer;
+        padding: 0.5em;
+        padding-right: 2em;
+        width: 130%;
+        border: none;
+        background: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        text-indent: 0.01px;
+        text-overflow: '';
+        width: 160% \9;
+      }
+      .select select:focus {
+        outline: none;
+      }
+      .select:before {
+        font-family: "icons";
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .searcher {
+       display:inline-block;
+       background: rgba(255, 255, 255, 0);
+       width: 35%;
+       text-align: center;
+       font-size: 1.6rem;
+     }
+     .searcher-main {
+       border: 1px solid #aaa;
+       border-radius: 4px;
+     }
+
+     .searcher-text {
+       width: 80%;
+       text-align: center;
+       border: none;
+       outline: none;
+     }
+     .icon--down:before, .select:before {
+      content: "\e600";
+    }
+    .note{max-width: 80%; margin: 0 auto;}
+
+  </style>
+
+
+
+
+
+
+  <div class="note">
+    <h1>放置江湖主动查询表</h1>
+    <p id="version">切换门派/重数查看主动效果，悟性为先天+后天值</p>
+    <p>欢迎加入放置江湖大玩家交流群663553792（GG大玩家服）</p>
+    门派
+    <div class="select">
+      <select required id="familyselect">
+        <option value ="古墓">古墓</option>
+        <option value ="桃花岛">桃花岛</option>
+        <option value="江湖">江湖</option>
+        <option value="官府">官府</option>
+        <option value="天山">天山</option>
+        <option value="星宿">星宿</option>
+        <option value="崆峒">崆峒</option>
+        <option value="唐门">唐门</option>
+        <option value="少林">少林</option>
+        <option value="慕容">慕容</option>
+        <option value="白驼山">白驼山</option>
+        <option value="幽冥教">幽冥教</option>
+        <option value="重光教">重光教</option>
+        <option value="昆仑">昆仑</option>
+        <option value="海鲸帮">海鲸帮</option>
+        <option value="丐帮">丐帮</option>
+        <option value="天龙寺">天龙寺</option>
+        <option value="铁掌帮">铁掌帮</option>
+        <option value="华山">华山</option>
+        <option value="五毒教">五毒教</option>
+        <option value="落月山庄">落月山庄</option>
+        <option value="峨眉">峨眉</option>
+        <option value="雪山寺">雪山寺</option>
+        <option value="明教">明教</option>
+        <option value="全真教">全真教</option>
+        <option value="日月神教">日月神教</option>
+        <option value="武当">武当</option>
+        <option value="金钱帮">金钱帮</option>
+      </select>
+    </div>
+    重数
+    <div class="select" style="width:15%">
+      <select required id = "skilllevel">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+      </select>
+    </div>
+    悟性
+    <div class="searcher">
+      <p class="searcher-main">
+       <input class="searcher-text" placeholder="60"></input>
+     </p>
+   </div>
+   
+ </div>
+ <div class="searcher-result">
+
+ </div>
+</div>
+
+
+
+<script>
+  var searchContent;
+  var resultContent;
+  var finishFlag = true;
+  var result = new Array();
+  $(document).ready(function(){ 
+    $('#version').empty();
+    $('#version').html("切换门派/重数查看主动效果，悟性为先天+后天值。最近更新时间"+version);
+    
+    if (finishFlag){
+     initSearchList();
+   }  
+ });
+  $('.searcher-text').on('input', function() {
+    if (finishFlag){
+     initSearchList();
+   }  
+ });
+  $('#familyselect').on('change',function() {
+    // alert("stop");
+    if (finishFlag){
+     initSearchList();
+   }  
+ });
+  $('#skilllevel').on('change',function() {
+    // alert("stop");
+    if (finishFlag){
+     initSearchList();
+   }  
+ });
+  function initSearchList() {
+    finishFlag = false;
+    resultContent = "";
+    result = new Array();
+    var options1=$("#familyselect option:selected");
+    family = options1.val();
+    var options2=$("#skilllevel option:selected");
+    skilllevel = options2.val();
+    smart = Number(replaceIllegalStr($('.searcher-text').val()));
+
+    for(var i=0; i<skillJson.length; i++){    
+     if(skillJson[i]["family"]==family && skillJson[i]["NameLv"]==Number(skilllevel)){
+      result.push(i)
+    }
+    //result =uniq(result);
+    //console.log(result.length);
+    
+    
+  }
+  resultContent = "<table><thead><tr><th>武学</th><th>主动</th><th>使用要求</th><th>描述</th><th>效果系数</th><th>冷却时间</th><th>内力消耗</th><th>领悟方式</th><th>所需残页</th></tr></thead><tbody>"
+  for(var j in result){
+    var i = result[j];
+    console.log(i);
+    pageNum=Math.ceil((0.6*(skilllevel*100)*(skilllevel*100)*(skilllevel*100)/skillJson[i]["potEfficiency"]/(200+smart))/500);
+    resultContent = resultContent + "<tr>";
+    resultContent = resultContent + "<td data-label=\"武学\">"+skillJson[i]["SkillName"]+"</td>";
+    resultContent = resultContent + "<td data-label=\"主动\">"+skillJson[i]["name"]+"</td>";
+    resultContent = resultContent + "<td data-label=\"使用要求\">"+skillJson[i]["cons"]+"</td>";
+    resultContent = resultContent + "<td data-label=\"描述\">"+skillJson[i]["desc"]+"</td>";
+    resultContent = resultContent + "<td data-label=\"效果系数\">"+skillJson[i]["effectAll"]+"</td>";
+    resultContent = resultContent + "<td data-label=\"冷却时间\">"+skillJson[i]["cd"]+"</td>";
+    resultContent = resultContent + "<td data-label=\"内力消耗\">"+skillJson[i]["cost"]+"</td>";
+    resultContent = resultContent + "<td data-label=\"领悟方式\">"+skillJson[i]["learnMethod"]+"</td>";
+    resultContent = resultContent + "<td data-label=\"所需残页\">"+pageNum + "("+skillJson[i]["level"]+")</td>";
+    resultContent = resultContent + "</tr>";
+  }
+  resultContent = resultContent  + "</tbody></table>"
+  $('.searcher-result').empty();
+  $('.searcher-result').html(resultContent);
+  finishFlag = true;
+}
+
+function uniq(array){
+  var temp = [];
+  for(var i = 0; i < array.length; i++){
+    if(temp.indexOf(array[i]) == -1){
+      temp.push(array[i]);
+    }
+  }
+  return temp;
+}
+function replaceIllegalStr(str) {
+ var reg;
+ var illegal_list = ["/", "\\",
+ "[", "]",
+ "{", "}",
+ "<", ">",
+ "＜", "＞",
+ "「", "」",
+ "：", "；",
+ "、", "•",
+ "^", "'", "\"",
+ "\r", "\r\n", "\\n", "\n"];
+ for (var i = 0; i < illegal_list.length; i++) {
+  if (str.indexOf(illegal_list[i]) >= 0) {
+   if (illegal_list[i] == '\\' || illegal_list[i] == '[') {
+    reg = new RegExp('\\' + illegal_list[i], "g");
+  } else {
+    reg = new RegExp(illegal_list[i], "g");
+  }
+  str = str.replace(reg, '');
+}
+}
+return str.trim();
+}
+</script>
+</body>
+</html>
