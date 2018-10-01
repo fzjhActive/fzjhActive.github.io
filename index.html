@@ -170,6 +170,21 @@
       content: "\e600";
     }
     .note{max-width: 80%; margin: 0 auto;}
+    .skillInfoWindow {
+      display: none;
+      background-color: #FFFFFF;
+      width: 80%;
+      border: 1px solid #000000;
+      border-radius: 10px;
+      position:fixed;
+      bottom: 10%;
+      left: 10%;
+      z-index: 999;
+    }
+    .skillInfo:hover .skillInfoWindow{
+      display: block;
+    }
+
 
   </style>
 
@@ -272,7 +287,7 @@
     // alert("stop");
     if (finishFlag){
      initSearchList();
-   }  
+   }
  });
   function initSearchList() {
     finishFlag = false;
@@ -298,7 +313,8 @@
     var i = result[j];
     console.log(i);
     pageNum=Math.ceil((0.6*(skilllevel*100)*(skilllevel*100)*(skilllevel*100)/skillJson[i]["potEfficiency"]/(200+smart))/500);
-    resultContent = resultContent + "<tr>";
+    resultContent = resultContent + "<tr class=\"skillInfo\">";
+    
     resultContent = resultContent + "<td data-label=\"武学\">"+skillJson[i]["SkillName"]+"</td>";
     resultContent = resultContent + "<td data-label=\"主动\">"+skillJson[i]["name"]+"</td>";
     resultContent = resultContent + "<td data-label=\"使用要求\">"+skillJson[i]["cons"]+"</td>";
@@ -308,6 +324,9 @@
     resultContent = resultContent + "<td data-label=\"内力消耗\">"+skillJson[i]["cost"]+"</td>";
     resultContent = resultContent + "<td data-label=\"领悟方式\">"+skillJson[i]["learnMethod"]+"</td>";
     resultContent = resultContent + "<td data-label=\"所需残页\">"+pageNum + "("+skillJson[i]["level"]+")</td>";
+    resultContent = resultContent + "<td class=\"skillInfoWindow\">";
+    resultContent = resultContent + skillJson[i]["effectInfo"];
+    resultContent = resultContent + "</td>";
     resultContent = resultContent + "</tr>";
   }
   resultContent = resultContent  + "</tbody></table>"
