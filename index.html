@@ -90,72 +90,29 @@
           font-weight: bold;
         }
       }
+
       .select {
-        width: 35%;
-        display: inline-block;
-        position: relative;
-        vertical-align: middle;
-        padding: 0;
-        overflow: hidden;
-        background: #fff;
-        color: #555;
+        margin: 0 2.5%;
+        height: 20px;
+      }
+      .select select{
+        text-align: center;
+        margin: 0 auto;
+        width: 100%;
         border: 1px solid #aaa;
-        text-shadow: none;
-        -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
         border-radius: 4px;
-        -moz-transition: box-shadow 0.25s ease;
-        -o-transition: box-shadow 0.25s ease;
-        -webkit-transition: box-shadow 0.25s ease;
-        transition: box-shadow 0.25s ease;
-      }
-      .select:hover {
-        -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-        -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-      }
-      .select:before {
-        position: absolute;
-        top: 0.5em;
-        right: 0.5em;
-        pointer-events: none;
-      }
-      .select select {
-        cursor: pointer;
-        padding: 0.5em;
-        padding-right: 2em;
-        width: 130%;
-        border: none;
         background: transparent;
-        background-image: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        text-indent: 0.01px;
-        text-overflow: '';
-        width: 160% \9;
-      }
-      .select select:focus {
-        outline: none;
-      }
-      .select:before {
-        font-family: "icons";
-        speak: none;
-        font-style: normal;
-        font-weight: normal;
-        font-variant: normal;
-        text-transform: none;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
+      }      
       .searcher {
-       display:inline-block;
-       background: rgba(255, 255, 255, 0);
-       width: 35%;
-       text-align: center;
-       font-size: 1.6rem;
-     }
-     .searcher-main {
+        height: 20px;
+        width: 95%;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0);
+        text-align: center;
+        font-size: 16px;
+      }
+      .searcher-main {
+       margin: 0 0;
        border: 1px solid #aaa;
        border-radius: 4px;
      }
@@ -166,13 +123,21 @@
        border: none;
        outline: none;
      }
-     .icon--down:before, .select:before {
-      content: "\e600";
+     
+     .note{
+      background: #FFFFFF;
+      margin: 0 auto;
+      position: fixed;
+      top: 0;
+      width: 80%;
+      left: 10%;
+      max-height: 110px;
     }
-    .note{max-width: 80%; margin: 0 auto;}
+
     .skillInfoWindow {
+
       display: none;
-      background-color: #FFFFFF;
+      background-color: rgba(224, 224, 224, 0.8);
       width: 80%;
       border: 1px solid #000000;
       border-radius: 10px;
@@ -180,12 +145,40 @@
       bottom: 10%;
       left: 10%;
       z-index: 999;
+      text-align: left;
+      max-height: 80%;
+      overflow-y: auto;
     }
     .skillInfo:hover .skillInfoWindow{
       display: block;
     }
-
-
+    .closebutton {
+      float:right;
+      background: rgba(224, 224, 224, 0.8);
+      color: red;
+      border-radius: 10px;
+      line-height: 20px;
+      text-align: center;
+      height: 20px;
+      width: 20px;
+      font-size: 10px;
+      padding: 1px;
+    }
+    .closebutton::before{
+      content:"\2716";
+    }
+    h1 {
+      font-size:20px;
+      text-align: center;
+      height: 20px;
+    }
+    .tips {
+      width: 80%;
+      font-size: 12px;
+      color: #8F8F8F;
+      margin: 0 auto;
+      margin-top: 110px;
+    }
   </style>
 
 
@@ -195,12 +188,9 @@
 
   <div class="note">
     <h1>放置江湖主动查询表</h1>
-    <p id="version">切换门派/重数查看主动效果，悟性为先天+后天值</p>
-    <p>欢迎加入放置江湖大玩家交流群663553792（GG大玩家服）</p>
-    门派
     <div class="select">
       <select required id="familyselect">
-        <option value ="古墓">古墓</option>
+        <option value ="古墓">古墓(请选择门派)</option>
         <option value ="桃花岛">桃花岛</option>
         <option value="江湖">江湖</option>
         <option value="官府">官府</option>
@@ -230,10 +220,9 @@
         <option value="金钱帮">金钱帮</option>
       </select>
     </div>
-    重数
-    <div class="select" style="width:15%">
+    <div class="select">
       <select required id = "skilllevel">
-        <option value="1">1</option>
+        <option value="1">1(请选择技能重数)</option>
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4</option>
@@ -244,13 +233,16 @@
         <option value="9">9</option>
       </select>
     </div>
-    悟性
     <div class="searcher">
       <p class="searcher-main">
-       <input class="searcher-text" placeholder="60"></input>
+       <input class="searcher-text" placeholder="请输入悟性"></input>
      </p>
    </div>
    
+ </div>
+ <div class="tips">
+   <p id="version">切换门派/重数查看主动效果，悟性为先天+后天值</p>
+   <p>欢迎加入放置江湖大玩家交流群663553792（GG大玩家服）</p>
  </div>
  <div class="searcher-result">
 
@@ -289,6 +281,7 @@
      initSearchList();
    }
  });
+
   function initSearchList() {
     finishFlag = false;
     resultContent = "";
@@ -312,7 +305,7 @@
   for(var j in result){
     var i = result[j];
     console.log(i);
-    pageNum=Math.ceil((0.6*(skilllevel*100)*(skilllevel*100)*(skilllevel*100)/skillJson[i]["potEfficiency"]/(200+smart))/500);
+    pageNum=Math.ceil(0.15*(100*skilllevel)*(100*skilllevel)*(100*skilllevel)/500*100/(Number(skillJson[i]["potEfficiency"])*(200+smart)/200)/10/500);
     resultContent = resultContent + "<tr class=\"skillInfo\">";
     
     resultContent = resultContent + "<td data-label=\"武学\">"+skillJson[i]["SkillName"]+"</td>";
@@ -325,6 +318,8 @@
     resultContent = resultContent + "<td data-label=\"领悟方式\">"+skillJson[i]["learnMethod"]+"</td>";
     resultContent = resultContent + "<td data-label=\"所需残页\">"+pageNum + "("+skillJson[i]["level"]+")</td>";
     resultContent = resultContent + "<td class=\"skillInfoWindow\">";
+
+    resultContent = resultContent + "<center><b>" + skillJson[i]["name"] + "</b></center>";
     resultContent = resultContent + skillJson[i]["effectInfo"];
     resultContent = resultContent + "</td>";
     resultContent = resultContent + "</tr>";
