@@ -96,4 +96,7 @@ h1{
     font-size: 8px;
     color: #3f3f3f;
     text-align: center;
+    width: 100%;
+    margin: 30px auto;
+    display: inline-block;
 }
