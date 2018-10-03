@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<link rel="shortcut icon" href="img/icon.png" >
+<title>放置江湖乡试与灯谜查询</title>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/examXS.js"></script>
+<script src="js/version.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<style type="text/css">
+  *{margin: 0; padding: 0}
+  .container{
+    margin-top: 20px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background: #f0f0f0;
+    max-height: 70%;
+
+  }
+  .my-biji-view{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  .my-biji-view li{
+    border-top: 10px solid #fff;
+    padding: 11px 15px;
+  }
+  .my-biji-view li .biji-tit{
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #000;
+    font-weight: 600;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .my-biji-view li .biji-content{
+    font-size: 14px;
+    color: #000;
+    line-height: 20px;
+    margin-bottom: 10px;
+  }
+  .my-biji-view li .biji-oth{
+    border-top: 1px solid #f2f2f2;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #999;
+  }
+  button{
+    padding: 3px 6px;
+    border: none;
+    outline: none;
+    background-color: #a0a0a0;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+</style>
+<!--[if IE]>
+		
+		<style type="text/css">			
+			li.purchase a {
+				padding-top: 5px;
+				background-position: 0px -4px;
+			}
+			
+			li.remove_frame a {
+				padding-top: 5px;
+				background-position: 0px -3px;
+			}						
+		</style>
+		
+    <![endif]-->
+    <body>
+
+
+
+
+      <div class="menu">
+        <ul id="menu_list">
+          <li><a href="index.html">主动查询表</a></li>
+          <li><a href="exam.html">乡试与灯谜</a></li>
+          <li><a href="updatelog.html">更新日志</a></li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <div class="title">
+          <div id="menu_button">
+            <h1>更新日志</h1>
+            <div id="hamburger">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <ul class="my-biji-view">
+          <li>
+            <h4 class="biji-tit">
+              2018-10-03 15:18 更新日志
+            </h4>
+            <div class="biji-content">
+              <b>更新内容</b><br/>
+              1.新增了乡试与灯谜查询时按回车键自动清除查询内容的功能（感谢「古墓杨依霜」大佬的建议）；<br/>
+              2.修复了主动查询表中在一定条件下才能触发的效果的显示错误问题。
+            </div>
+            <a class="biji-oth">
+              <time>2018-10-03 15:18</time>
+              <button>展开</button>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+      <script>
+
+
+        $('#menu_button').click(function(){
+          var displayStatus = $('.menu').css('display');
+          if (displayStatus == "block"){
+            $('.menu').css('display',"none");
+          }
+          else{
+            $('.menu').css('display',"block");
+          }
+
+        });
+        $(function(){
+          $(".biji-content").hide();
+        //按钮点击事件
+        $("button").click(function(){
+          var txts = $(this).parents("li");
+          if ($(this).text() == "展开"){
+            $(this).text("收起");
+            txts.find(".biji-tit").hide();
+            txts.find(".biji-content").show();
+          }else{
+            $(this).text("展开");
+            txts.find(".biji-tit").show();
+            txts.find(".biji-content").hide();
+          }
+        })
+      });
+    </script> 
+    <p class="law">
+      内容均来自网络或自行测试得出，如有侵权，立即删除
+    </p>
+  </body>
+  </html>

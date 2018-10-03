@@ -88,3 +88,12 @@ h1{
     text-align: center;
     display: inline-block;
 }
+.allcontainer{
+
+     width: 100%;
+}
+.law{
+    font-size: 8px;
+    color: #3f3f3f;
+    text-align: center;
+}

@@ -15,14 +15,14 @@
   body {
     margin: 0;
     font-family: arial;
-}
+  }
 
 
 
 
 
 
-table {
+  table {
     border: 1px solid #ccc;
     width: 80%;
     margin:0;
@@ -30,95 +30,95 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
     margin: 0 auto;
-}
-
-table tr {
-    border: 1px solid #ddd;
-    padding: 5px;
-}
-
-table th, table td {
-    padding: 10px;
-    text-align: center;
-}
-
-table th {
-    text-transform: uppercase;
-    font-size: 14px;
-    letter-spacing: 1px;
-}
-
-@media screen and (max-width: 600px) {
-
-    table {
-      border: 0;
-  }
-
-  table thead {
-      display: none;
   }
 
   table tr {
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+
+  table th, table td {
+    padding: 10px;
+    text-align: center;
+  }
+
+  table th {
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  @media screen and (max-width: 600px) {
+
+    table {
+      border: 0;
+    }
+
+    table thead {
+      display: none;
+    }
+
+    table tr {
       margin-bottom: 10px;
       display: block;
       border-bottom: 2px solid #ddd;
-  }
+    }
 
-  table td {
+    table td {
       display: block;
       text-align: right;
       font-size: 13px;
       border-bottom: 1px dotted #ccc;
-  }
+    }
 
-  table td:last-child {
+    table td:last-child {
       border-bottom: 0;
-  }
+    }
 
-  table td:before {
+    table td:before {
       content: attr(data-label);
       float: left;
       text-transform: uppercase;
       font-weight: bold;
+    }
   }
-}
 
-.select {
+  .select {
     margin: 0 2.5%;
     
-}
-.select select{
+  }
+  .select select{
     text-align: center;
     margin: 0 auto;
     width: 100%;
     border: 1px solid #aaa;
     border-radius: 4px;
     background: transparent;
-}      
-.searcher {
+  }      
+  .searcher {
     height: 20px;
     width: 95%;
     margin: 0 auto;
     background: rgba(255, 255, 255, 0);
     text-align: center;
     font-size: 16px;
-}
-.searcher-main {
- margin: 0 0;
- border: 1px solid #aaa;
- border-radius: 4px;
-}
+  }
+  .searcher-main {
+   margin: 0 0;
+   border: 1px solid #aaa;
+   border-radius: 4px;
+ }
 
-.searcher-text {
- width: 80%;
- text-align: center;
- border: none;
- outline: none;
-}
+ .searcher-text {
+   width: 80%;
+   text-align: center;
+   border: none;
+   outline: none;
+ }
 
 
 
-.skillInfoWindow {
+ .skillInfoWindow {
 
   display: none;
   background-color: rgba(224, 224, 224, 0.8);
@@ -153,7 +153,7 @@ table th {
 }
 
 #familyselect{
-    margin-top: 15px;
+  margin-top: 15px;
 }
 </style>
 <!--[if IE]>
@@ -171,148 +171,148 @@ table th {
 		</style>
 		
     <![endif]-->
-<body>
+    <body>
 
 
 
 
-<div class="menu">
-<ul id="menu_list" class="hidden">
-    <li class="current_page"><a href="index.html">主动查询表</a></li>
-    <li><a href="exam.html">乡试与灯谜</a></li>
-
-  </ul>
-</div>
-
-  <div class="note">
-  <div class="title">
-    <div id="menu_button">
-    <h1>放置江湖主动查询表</h1>
-    <div id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
+      <div class="menu">
+        <ul id="menu_list">
+          <li><a href="index.html">主动查询表</a></li>
+          <li><a href="exam.html">乡试与灯谜</a></li>
+          <li><a href="updatelog.html">更新日志</a></li>
+        </ul>
       </div>
-    </div>
-  </div>
-    <div class="select">
-      <select required id="familyselect">
-        <option value ="古墓">古墓(请选择门派)</option>
-        <option value ="桃花岛">桃花岛</option>
-        <option value="江湖">江湖</option>
-        <option value="官府">官府</option>
-        <option value="天山">天山</option>
-        <option value="星宿">星宿</option>
-        <option value="崆峒">崆峒</option>
-        <option value="唐门">唐门</option>
-        <option value="少林">少林</option>
-        <option value="慕容">慕容</option>
-        <option value="白驼山">白驼山</option>
-        <option value="幽冥教">幽冥教</option>
-        <option value="重光教">重光教</option>
-        <option value="昆仑">昆仑</option>
-        <option value="海鲸帮">海鲸帮</option>
-        <option value="丐帮">丐帮</option>
-        <option value="天龙寺">天龙寺</option>
-        <option value="铁掌帮">铁掌帮</option>
-        <option value="华山">华山</option>
-        <option value="五毒教">五毒教</option>
-        <option value="落月山庄">落月山庄</option>
-        <option value="峨眉">峨眉</option>
-        <option value="雪山寺">雪山寺</option>
-        <option value="明教">明教</option>
-        <option value="全真教">全真教</option>
-        <option value="日月神教">日月神教</option>
-        <option value="武当">武当</option>
-        <option value="金钱帮">金钱帮</option>
-      </select>
-    </div>
-    <div class="select">
-      <select required id = "skilllevel">
-        <option value="1">1(请选择技能重数)</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-      </select>
-    </div>
-    <div class="searcher">
-      <p class="searcher-main">
-       <input class="searcher-text" placeholder="请输入悟性"></input>
-     </p>
+
+      <div class="note">
+        <div class="title">
+          <div id="menu_button">
+            <h1>放置江湖主动查询表</h1>
+            <div id="hamburger">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="select">
+          <select required id="familyselect">
+            <option value ="古墓">古墓(请选择门派)</option>
+            <option value ="桃花岛">桃花岛</option>
+            <option value="江湖">江湖</option>
+            <option value="官府">官府</option>
+            <option value="天山">天山</option>
+            <option value="星宿">星宿</option>
+            <option value="崆峒">崆峒</option>
+            <option value="唐门">唐门</option>
+            <option value="少林">少林</option>
+            <option value="慕容">慕容</option>
+            <option value="白驼山">白驼山</option>
+            <option value="幽冥教">幽冥教</option>
+            <option value="重光教">重光教</option>
+            <option value="昆仑">昆仑</option>
+            <option value="海鲸帮">海鲸帮</option>
+            <option value="丐帮">丐帮</option>
+            <option value="天龙寺">天龙寺</option>
+            <option value="铁掌帮">铁掌帮</option>
+            <option value="华山">华山</option>
+            <option value="五毒教">五毒教</option>
+            <option value="落月山庄">落月山庄</option>
+            <option value="峨眉">峨眉</option>
+            <option value="雪山寺">雪山寺</option>
+            <option value="明教">明教</option>
+            <option value="全真教">全真教</option>
+            <option value="日月神教">日月神教</option>
+            <option value="武当">武当</option>
+            <option value="金钱帮">金钱帮</option>
+          </select>
+        </div>
+        <div class="select">
+          <select required id = "skilllevel">
+            <option value="1">1(请选择技能重数)</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+          </select>
+        </div>
+        <div class="searcher">
+          <p class="searcher-main">
+           <input class="searcher-text" placeholder="请输入悟性"></input>
+         </p>
+       </div>
+       
+     </div>
+     <div class="tips">
+       <p id="version">切换门派/重数查看主动效果，悟性为先天+后天值</p>
+       <p>欢迎加入放置江湖大玩家交流群663553792（GG大玩家服）</p>
+     </div>
+     <div class="searcher-result">
+
+     </div>
    </div>
-   
- </div>
- <div class="tips">
-   <p id="version">切换门派/重数查看主动效果，悟性为先天+后天值</p>
-   <p>欢迎加入放置江湖大玩家交流群663553792（GG大玩家服）</p>
- </div>
- <div class="searcher-result">
-
- </div>
-</div>
 
 
 
-<script>
-  var searchContent;
-  var resultContent;
-  var finishFlag = true;
-  var result = new Array();
-  $(document).ready(function(){ 
-    $('#version').empty();
-    $('#version').html("切换门派/重数查看主动效果，悟性为先天+后天值。鼠标放在技能上方或点击技能可查看更多详细信息。最近更新时间"+version);
-    
-    if (finishFlag){
-     initSearchList();
-   }  
- });
+   <script>
+    var searchContent;
+    var resultContent;
+    var finishFlag = true;
+    var result = new Array();
+    $(document).ready(function(){ 
+      $('#version').empty();
+      $('#version').html("切换门派/重数查看主动效果，悟性为先天+后天值。鼠标放在技能上方或点击技能可查看更多详细信息。最近更新时间"+version);
+      
+      if (finishFlag){
+       initSearchList();
+     }  
+   });
 
-  $('.searcher-text').on('input', function() {
-    if (finishFlag){
-     initSearchList();
-   }  
- });
-  $('#familyselect').on('change',function() {
+    $('.searcher-text').on('input', function() {
+      if (finishFlag){
+       initSearchList();
+     }  
+   });
+    $('#familyselect').on('change',function() {
     // alert("stop");
     if (finishFlag){
      initSearchList();
    }  
  });
-  $('#skilllevel').on('change',function() {
+    $('#skilllevel').on('change',function() {
     // alert("stop");
     if (finishFlag){
      initSearchList();
    }
  });
-  $('#menu_button').click(function(){
-    var displayStatus = $('.menu').css('display');
-    if (displayStatus == "block"){
-      $('.menu').css('display',"none");
-    }
-    else{
-      $('.menu').css('display',"block");
-    }
-    
-  });
-  function initSearchList() {
-    finishFlag = false;
-    resultContent = "";
-    result = new Array();
-    var options1=$("#familyselect option:selected");
-    family = options1.val();
-    var options2=$("#skilllevel option:selected");
-    skilllevel = options2.val();
-    smart = Number(replaceIllegalStr($('.searcher-text').val()));
+    $('#menu_button').click(function(){
+      var displayStatus = $('.menu').css('display');
+      if (displayStatus == "block"){
+        $('.menu').css('display',"none");
+      }
+      else{
+        $('.menu').css('display',"block");
+      }
+      
+    });
+    function initSearchList() {
+      finishFlag = false;
+      resultContent = "";
+      result = new Array();
+      var options1=$("#familyselect option:selected");
+      family = options1.val();
+      var options2=$("#skilllevel option:selected");
+      skilllevel = options2.val();
+      smart = Number(replaceIllegalStr($('.searcher-text').val()));
 
-    for(var i=0; i<skillJson.length; i++){    
-     if(skillJson[i]["family"]==family && skillJson[i]["NameLv"]==Number(skilllevel)){
-      result.push(i)
-    }
+      for(var i=0; i<skillJson.length; i++){    
+       if(skillJson[i]["family"]==family && skillJson[i]["NameLv"]==Number(skilllevel)){
+        result.push(i)
+      }
     //result =uniq(result);
     //console.log(result.length);
     
@@ -381,8 +381,8 @@ function replaceIllegalStr(str) {
 return str.trim();
 }
 </script>
-<p>
-<center>内容均来自网络或自行测试得出，如有侵权，立即删除</center>
+<p class="law">
+  内容均来自网络或自行测试得出，如有侵权，立即删除
 </p>
 </body>
 </html>
