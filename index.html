@@ -87,17 +87,28 @@
     margin: 0 2.5%;
     
   }
-  .select select{
+  select{
     text-align: center;
     margin: 0 auto;
     width: 100%;
     border: 1px solid #aaa;
     border-radius: 4px;
     background: transparent;
-  }      
+  }
+  .chongshu {
+  	width: 45%;
+  	position: relative;
+  	margin: 0 auto;
+  	left: 2.5%;
+  	height: 20px;
+  	display: inline-block;
+  }     
   .searcher {
     height: 20px;
-    width: 95%;
+    width: 45%;
+    position: relative;
+    left: 5%;
+    display: inline-block;
     margin: 0 auto;
     background: rgba(255, 255, 255, 0);
     text-align: center;
@@ -115,7 +126,26 @@
    border: none;
    outline: none;
  }
+ .searcher2 {
+    height: 20px;
+    width: 95%;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0);
+    text-align: center;
+    font-size: 16px;
+  }
+  .searcher-main2 {
+   margin: 0 0;
+   border: 1px solid #aaa;
+   border-radius: 4px;
+ }
 
+ .searcher-text2 {
+   width: 80%;
+   text-align: center;
+   border: none;
+   outline: none;
+ }
 
 
  .skillInfoWindow {
@@ -227,7 +257,7 @@
             <option value="金钱帮">金钱帮</option>
           </select>
         </div>
-        <div class="select">
+        <div class="chongshu">
           <select required id = "skilllevel">
             <option value="1">1(请选择技能重数)</option>
             <option value="2">2</option>
@@ -245,7 +275,11 @@
            <input class="searcher-text" placeholder="请输入悟性"></input>
          </p>
        </div>
-       
+        <div class="searcher2">
+          <p class="searcher-main2">
+           <input class="searcher-text2" placeholder="技能搜索（技能/武学名称,效果名称）"></input>
+         </p>
+       </div>
      </div>
      <div class="tips">
        <p id="version">切换门派/重数查看主动效果，悟性为先天+后天值</p>
@@ -277,6 +311,11 @@
        initSearchList();
      }  
    });
+    $('.searcher-text2').on('input', function() {
+      if (finishFlag){
+       searchSkill();
+     }  
+   });
     $('#familyselect').on('change',function() {
     // alert("stop");
     if (finishFlag){
@@ -299,6 +338,55 @@
       }
       
     });
+    function searchSkill(){
+      finishFlag = false;
+      resultContent = "";
+      var options2=$("#skilllevel option:selected");
+      skilllevel = options2.val();
+      smart = Number(replaceIllegalStr($('.searcher-text').val()));
+      result = new Array();
+      searchContent = (replaceIllegalStr($('.searcher-text2').val()));
+      for(var i=0; i<skillJson.length; i++){   
+       var skillName =  skillJson[i]["SkillName"];
+       var name =  skillJson[i]["name"];
+       var effectAll =  skillJson[i]["effectAll"];
+
+       if(typeof(skillName)=="string"){
+	       if((skillName.indexOf(searchContent)>-1 || name.indexOf(searchContent)>-1 || effectAll.indexOf(searchContent)>-1)&& skillJson[i]["NameLv"]==Number(skilllevel)){
+	        	result.push(i);
+	       }
+  		}	
+      }
+      result = uniq(result);
+      resultContent = "<table><thead><tr><th>武学</th><th>主动</th><th>使用要求</th><th>描述</th><th>效果系数</th><th>冷却时间</th><th>内力消耗</th><th>领悟方式</th><th>所需残页</th></tr></thead><tbody>"
+	  for(var j in result){
+	    var i = result[j];
+	    
+	    pageNum=Math.ceil(0.15*(100*skilllevel)*(100*skilllevel)*(100*skilllevel)/500*100/(Number(skillJson[i]["potEfficiency"])*(200+smart)/200)/10/500);
+	    resultContent = resultContent + "<tr class=\"skillInfo\">";
+	    
+	    resultContent = resultContent + "<td data-label=\"武学\">"+skillJson[i]["SkillName"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"主动\">"+skillJson[i]["name"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"使用要求\">"+skillJson[i]["cons"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"描述\">"+skillJson[i]["desc"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"效果系数\">"+skillJson[i]["effectAll"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"冷却时间\">"+skillJson[i]["cd"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"内力消耗\">"+skillJson[i]["cost"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"领悟方式\">"+skillJson[i]["learnMethod"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"所需残页\">"+pageNum + "("+skillJson[i]["level"]+")</td>";
+	    resultContent = resultContent + "<td class=\"skillInfoWindow\">";
+
+	    resultContent = resultContent + "<center><b>" + skillJson[i]["name"] + "</b></center>";
+	    resultContent = resultContent + skillJson[i]["effectInfo"];
+	    resultContent = resultContent + "</td>";
+	    resultContent = resultContent + "</tr>";
+	  }
+	  resultContent = resultContent  + "</tbody></table>"
+	  $('.searcher-result').empty();
+	  $('.searcher-result').html(resultContent);
+	  finishFlag = true;
+    
+	}
     function initSearchList() {
       finishFlag = false;
       resultContent = "";
@@ -312,39 +400,37 @@
       for(var i=0; i<skillJson.length; i++){    
        if(skillJson[i]["family"]==family && skillJson[i]["NameLv"]==Number(skilllevel)){
         result.push(i)
-      }
+      	}
     //result =uniq(result);
-    //console.log(result.length);
-    
-    
-  }
-  resultContent = "<table><thead><tr><th>武学</th><th>主动</th><th>使用要求</th><th>描述</th><th>效果系数</th><th>冷却时间</th><th>内力消耗</th><th>领悟方式</th><th>所需残页</th></tr></thead><tbody>"
-  for(var j in result){
-    var i = result[j];
-    console.log(i);
-    pageNum=Math.ceil(0.15*(100*skilllevel)*(100*skilllevel)*(100*skilllevel)/500*100/(Number(skillJson[i]["potEfficiency"])*(200+smart)/200)/10/500);
-    resultContent = resultContent + "<tr class=\"skillInfo\">";
-    
-    resultContent = resultContent + "<td data-label=\"武学\">"+skillJson[i]["SkillName"]+"</td>";
-    resultContent = resultContent + "<td data-label=\"主动\">"+skillJson[i]["name"]+"</td>";
-    resultContent = resultContent + "<td data-label=\"使用要求\">"+skillJson[i]["cons"]+"</td>";
-    resultContent = resultContent + "<td data-label=\"描述\">"+skillJson[i]["desc"]+"</td>";
-    resultContent = resultContent + "<td data-label=\"效果系数\">"+skillJson[i]["effectAll"]+"</td>";
-    resultContent = resultContent + "<td data-label=\"冷却时间\">"+skillJson[i]["cd"]+"</td>";
-    resultContent = resultContent + "<td data-label=\"内力消耗\">"+skillJson[i]["cost"]+"</td>";
-    resultContent = resultContent + "<td data-label=\"领悟方式\">"+skillJson[i]["learnMethod"]+"</td>";
-    resultContent = resultContent + "<td data-label=\"所需残页\">"+pageNum + "("+skillJson[i]["level"]+")</td>";
-    resultContent = resultContent + "<td class=\"skillInfoWindow\">";
+    //console.log(result.length);    
+  	}
+	  resultContent = "<table><thead><tr><th>武学</th><th>主动</th><th>使用要求</th><th>描述</th><th>效果系数</th><th>冷却时间</th><th>内力消耗</th><th>领悟方式</th><th>所需残页</th></tr></thead><tbody>"
+	  for(var j in result){
+	    var i = result[j];
+	    console.log(i);
+	    pageNum=Math.ceil(0.15*(100*skilllevel)*(100*skilllevel)*(100*skilllevel)/500*100/(Number(skillJson[i]["potEfficiency"])*(200+smart)/200)/10/500);
+	    resultContent = resultContent + "<tr class=\"skillInfo\">";
+	    
+	    resultContent = resultContent + "<td data-label=\"武学\">"+skillJson[i]["SkillName"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"主动\">"+skillJson[i]["name"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"使用要求\">"+skillJson[i]["cons"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"描述\">"+skillJson[i]["desc"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"效果系数\">"+skillJson[i]["effectAll"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"冷却时间\">"+skillJson[i]["cd"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"内力消耗\">"+skillJson[i]["cost"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"领悟方式\">"+skillJson[i]["learnMethod"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"所需残页\">"+pageNum + "("+skillJson[i]["level"]+")</td>";
+	    resultContent = resultContent + "<td class=\"skillInfoWindow\">";
 
-    resultContent = resultContent + "<center><b>" + skillJson[i]["name"] + "</b></center>";
-    resultContent = resultContent + skillJson[i]["effectInfo"];
-    resultContent = resultContent + "</td>";
-    resultContent = resultContent + "</tr>";
-  }
-  resultContent = resultContent  + "</tbody></table>"
-  $('.searcher-result').empty();
-  $('.searcher-result').html(resultContent);
-  finishFlag = true;
+	    resultContent = resultContent + "<center><b>" + skillJson[i]["name"] + "</b></center>";
+	    resultContent = resultContent + skillJson[i]["effectInfo"];
+	    resultContent = resultContent + "</td>";
+	    resultContent = resultContent + "</tr>";
+	  }
+	  resultContent = resultContent  + "</tbody></table>"
+	  $('.searcher-result').empty();
+	  $('.searcher-result').html(resultContent);
+	  finishFlag = true;
 }
 
 function uniq(array){
