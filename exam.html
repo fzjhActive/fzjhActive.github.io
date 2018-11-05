@@ -72,6 +72,7 @@
         <ul id="menu_list">
           <li><a href="index.html">主动查询表</a></li>
           <li><a href="exam.html">乡试与灯谜</a></li>
+          <li><a href="exam2.html">殿试辅助</a></li>
           <li><a href="updatelog.html">更新日志</a></li>
         </ul>
       </div>
@@ -122,7 +123,7 @@
         }
       }
       result =uniq(result);
-      for(var j in result){
+      for(var j=0;j<result.length;j++){
         var i = result[j];
         console.log(i);
         if(typeof(examJson[i]["question"])!= "undefined"){
