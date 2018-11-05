@@ -136,6 +136,9 @@ select{
       $('.searcher-text').on('input', function() {
         initSearchList();
       });
+       $('#familyselect').on('change',function() {
+         initSearchList();
+       });
       function initSearchList() {
         resultContent = "";
         result = new Array();
@@ -180,15 +183,17 @@ select{
          
         }
         var keys = arrayKeys(sums);
-
+        // console.log(keys);
+        // console.log(sums);
+        // console.log(result.length);
         sums.mergeSort(keys);
-        resultContent ="<p>选择优先级</p>"
-        for (var i=0;i<sums.length;i++){
+        resultContent ="<p>一共有"+result.length+"本书符合搜索条件，选择优先级</p>"
+        for (var i=sums.length-1;i>=0;i--){
           resultContent =resultContent + "<p><center>" + wenti[keys[i]].name + "</center></p>";
         }
         // resultContent = resultContent + "<p>" + examJson[i]["question"] + "</p>";
-        console.log(keys);
-        console.log(sums);
+        // console.log(keys);
+        // console.log(sums);
         // resultContent = resultContent + "</br>";
         $('.searcher-result').empty();
         $('.searcher-result').html(resultContent);
