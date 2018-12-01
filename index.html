@@ -11,6 +11,7 @@
 <script src="js/activeSkill.js"></script>
 <script src="js/version.js"></script>
 <script src="js/math.min.js"></script>
+<script src="js/common.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <style type="text/css">
   body {
@@ -302,7 +303,7 @@
     $(document).ready(function(){ 
       $('#version').empty();
       $('#version').html("切换门派/重数查看主动效果，悟性为先天+后天值。鼠标放在技能上方或点击技能可查看更多详细信息。最近更新时间"+version);
-      
+      checkCookie(version);
       if (finishFlag){
        initSearchList();
      }  
@@ -409,7 +410,7 @@
 	  resultContent = "<table><thead><tr><th>武学</th><th>主动</th><th>使用要求</th><th>描述</th><th>效果系数</th><th>冷却时间</th><th>内力消耗</th><th>领悟方式</th><th>所需残页</th></tr></thead><tbody>"
 	  for(var j in result){
 	    var i = result[j];
-	    console.log(i);
+	    //console.log(i);
 	    pageNum=Math.ceil(0.15*(100*skilllevel)*(100*skilllevel)*(100*skilllevel)/500*100/(Number(skillJson[i]["potEfficiency"])*(200+smart)/200)/10/500);
 	    resultContent = resultContent + "<tr class=\"skillInfo\">";
 	    
