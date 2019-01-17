@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<link rel="shortcut icon" href="img/icon.png" >
+<title>放置江湖主动查询Q&A</title>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/examXS.js"></script>
+<script src="js/version.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<style type="text/css">
+  *{margin: 0; padding: 0}
+  .container{
+    margin-top: 20px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background: #f0f0f0;
+    max-height: 70%;
+
+  }
+  .my-biji-view{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  .my-biji-view li{
+    border-top: 10px solid #fff;
+    padding: 11px 15px;
+  }
+  .my-biji-view li .biji-tit{
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #000;
+    font-weight: 600;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .my-biji-view li .biji-content{
+    font-size: 14px;
+    color: #000;
+    line-height: 20px;
+    margin-bottom: 10px;
+  }
+  .my-biji-view li .biji-oth{
+    border-top: 1px solid #f2f2f2;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #999;
+  }
+  button{
+    padding: 3px 6px;
+    border: none;
+    outline: none;
+    background-color: #a0a0a0;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+</style>
+<!--[if IE]>
+		
+		<style type="text/css">			
+			li.purchase a {
+				padding-top: 5px;
+				background-position: 0px -4px;
+			}
+			
+			li.remove_frame a {
+				padding-top: 5px;
+				background-position: 0px -3px;
+			}						
+		</style>
+		
+    <![endif]-->
+    <body>
+
+
+
+
+      <div class="menu">
+        <ul id="menu_list">
+          <li><a href="index.html">主动查询表</a></li>
+          <li><a href="exam.html">乡试与灯谜</a></li>
+          <li><a href="exam2.html">殿试辅助</a></li>
+          <li><a href="updatelog.html">更新日志</a></li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <div class="title">
+          <div id="menu_button">
+            <h1>主动查询Q&A</h1>
+            <div id="hamburger">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <ul class="my-biji-view">
+          <li>
+            <h4 class="biji-tit">
+              公式中的「平均气血攻击伤害」是什么意思？
+            </h4>
+            <div class="biji-content">
+              <b>公式中的「平均气血攻击伤害」是什么意思？</b><br/>
+              平均气血伤害是指：当前装备的输出武学单次出手对敌方造成的平均气血伤害（不包括上限伤害的部分）<br/>
+              需要注意的是，如果使用的是拳脚，则「平均气血攻击伤害」只计算主手的平均气血伤害。
+            </div>
+            <a class="biji-oth">
+              
+              <button>展开</button>
+            </a>
+          </li>
+
+          <li>
+            <h4 class="biji-tit">
+              什么类型的buff或debuff能够叠加？
+            </h4>
+            <div class="biji-content">
+              <b>什么类型的buff或debuff能够叠加？</b><br/>
+              游戏中每一种buff或debuff都有其对应的ID，不同ID的buff或debuff是可以叠加的。在主动查询表汇总并不能看到每一种buff对应的ID，但是可以通过buff的中文名称判断是否可以叠加。<br/>
+              中文名称不相同的都可以叠加，中文名称相同的一般不可以叠加（会覆盖）<br/>
+              例如：嫁衣神功的攻击buff名称为[攻击提升]，黯然销魂掌的减攻击debuff为[降敌攻击]，那么就可以判断这两种buff/debuff是能够叠加的。<br/>
+              又例如：嫁衣神功的减防debuff为[防御降低自身]，葵花大法的减防debuff为[防御降低]，那么同样可以判断这两种debuff是能够叠加的。
+            </div>
+            <a class="biji-oth">
+              
+              <button>展开</button>
+            </a>
+          </li>
+
+          <li>
+            <h4 class="biji-tit">
+              公式中的属性是先天属性还是有效属性？
+            </h4>
+            <div class="biji-content">
+              <b>公式中的属性是先天属性还是有效属性？</b><br/>
+              所有与主动相关的计算中，公式中的属性就是面板属性，即先天属性+后天属性。
+            </div>
+            <a class="biji-oth">
+              
+              <button>展开</button>
+            </a>
+          </li>
+
+          <li>
+            <h4 class="biji-tit">
+              为什么说欢迎加入放置江湖大玩家交流群？
+            </h4>
+            <div class="biji-content">
+              <b>为什么说欢迎加入放置江湖大玩家交流群？</b><br/>
+              这个群是为了方便GG大玩家服的玩家们互相交流而建立的，所以欢迎GG服的玩家加入。<br/>
+              当然也欢迎其他服的大侠们进群，不过攻略的话都会同步发到峨眉群中的，也可以随意进行转发（请勿转发到修改群或脚本群）。
+            </div>
+            <a class="biji-oth">
+              
+              <button>展开</button>
+            </a>
+          </li>
+
+
+          
+        </ul>
+        
+
+            
+
+      </div>
+
+      <script>
+
+
+        $('#menu_button').click(function(){
+          var displayStatus = $('.menu').css('display');
+          if (displayStatus == "block"){
+            $('.menu').css('display',"none");
+          }
+          else{
+            $('.menu').css('display',"block");
+          }
+
+        });
+        $(function(){
+          $(".biji-content").hide();
+        //按钮点击事件
+        $("button").click(function(){
+          var txts = $(this).parents("li");
+          if ($(this).text() == "展开"){
+            $(this).text("收起");
+            txts.find(".biji-tit").hide();
+            txts.find(".biji-content").show();
+          }else{
+            $(this).text("展开");
+            txts.find(".biji-tit").show();
+            txts.find(".biji-content").hide();
+          }
+        })
+      });
+    </script> 
+    <p class="law">
+  内容均来自网络或自行测试得出，如有侵权，立即删除
+  <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274974079'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1274974079%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+</p>
+  </body>
+  </html>
