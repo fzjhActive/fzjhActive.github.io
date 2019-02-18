@@ -311,12 +311,23 @@
 
     $('.searcher-text').on('input', function() {
       if (finishFlag){
-       initSearchList();
+       searchContent = (replaceIllegalStr($('.searcher-text2').val()));
+     	if(searchContent.length>0){
+     		searchSkill();
+     	}else{
+     		initSearchList();
+     	}
      }  
    });
     $('.searcher-text2').on('input', function() {
       if (finishFlag){
-       searchSkill();
+      	searchContent = (replaceIllegalStr($('.searcher-text2').val()));
+     	if(searchContent.length>0){
+     		searchSkill();
+     	}else{
+     		
+     	}
+      
      }  
    });
     $('#familyselect').on('change',function() {
@@ -328,7 +339,13 @@
     $('#skilllevel').on('change',function() {
     // alert("stop");
     if (finishFlag){
-     initSearchList();
+    	searchContent = (replaceIllegalStr($('.searcher-text2').val()));
+     	if(searchContent.length>0){
+     		searchSkill();
+     	}else{
+     		initSearchList();
+     	}
+        
    }
  });
     $('#menu_button').click(function(){
