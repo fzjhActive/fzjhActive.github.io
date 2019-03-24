@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<link rel="shortcut icon" href="img/icon.png" >
+<title>武林大会</title>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/examXS.js"></script>
+<script src="js/version.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<style type="text/css">
+  .searcher {
+   background: rgba(255, 255, 255, 0);
+   width: 100%;
+   text-align: center;
+   font-size: 16px;
+ }
+ .searcher-main {
+   background: #F4F4F4;
+   border-radius: 4px;
+   line-height: 20px;
+ }
+
+ .searcher-text {
+   width: 80%;
+   text-align: center;
+   border: none;
+   outline: none;
+   background: #F4F4F4;
+
+ }
+ .pkTitle{
+  width:100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 125px;
+ }
+ .pkTitle2{
+  width:100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+ }
+ .pkA {
+  width:94%;
+  margin-left: auto;
+  margin-right: auto;
+  
+  margin-top: 0px;
+ }
+ .pkB {
+  width:94%;
+  margin-left: auto;
+  margin-right: auto;
+  
+  margin-top: 0px;
+ }
+ .pkC {
+  width:94%;
+  margin-left: auto;
+  margin-right: auto;
+  
+  margin-top: 0px;
+ }
+ .pkLie{
+  float:left;
+  
+ }
+ .pkText{
+  line-height: 30px;
+  margin:0;
+  text-align: center;
+ }
+ .tooltip { 
+  display: none;
+  background-color: rgba(224, 224, 224, 0.8);
+  width: 20%;
+  border-radius: 3px;
+  position:fixed;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 999;
+  text-align: center;
+  max-height: 80%;
+ }
+ .pkText:hover .tooltip{
+  display: block;
+  transition:  display .5s ease-in-out;
+  -webkit-transition: display .5s ease-in-out;
+  -moz-transition: display .5s ease-in-out;
+ }
+ 
+</style>
+<!--[if IE]>
+		
+		<style type="text/css">			
+			li.purchase a {
+				padding-top: 5px;
+				background-position: 0px -4px;
+			}
+			
+			li.remove_frame a {
+				padding-top: 5px;
+				background-position: 0px -3px;
+			}						
+		</style>
+		
+    <![endif]-->
+    <body>
+
+
+
+
+      <div class="menu">
+        <ul id="menu_list">
+          <li><a href="index.html">主动查询表</a></li>
+          <li><a href="exam.html">乡试与灯谜</a></li>
+          <li><a href="exam2.html">殿试辅助</a></li>
+          <li><a href="updatelog.html">更新日志</a></li>
+          <li><a href="bisai.html">武林大会</a></li>
+        </ul>
+      </div>
+      <div class="allcontainer">
+        <div class="note">
+          <div class="title">
+            <div id="menu_button">
+              <h1>大玩家服、啪啪服第一届武林大会</h1>
+              <div id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+          <p>
+            <center>大玩家服、啪啪服第一届武林大会隆重召开，可以在这里查看比赛进度。欢迎GG大玩家服的大侠加入放置江湖大玩家交流群663553792</center>
+          </p>
+
+          
+       </div>
+       <p class="pkTitle">
+       A组
+       </p>
+       <div class = "pkA">
+       </div>
+       <p class="pkTitle2">
+       B组
+       </p>
+       <div class = "pkB">
+       </div>
+       <p class="pkTitle2">
+       C组
+       </p>
+       <div class = "pkC">
+       </div>
+       <p class="pkTitle2">
+       团体赛（未开始）
+       </p>
+     </div>
+     <script>
+       
+      initGames('A');
+      initGames('B');
+      initGames('C');
+      
+      
+      
+$('#menu_button').click(function(){
+  var displayStatus = $('.menu').css('display');
+  if (displayStatus == "block"){
+    $('.menu').css('display',"none");
+  }
+  else{
+    $('.menu').css('display',"block");
+  }
+  
+});
+function initGames(server){
+  var games;
+        $.ajax({
+            type:"GET",
+            url:"http://106.13.117.174:8000/getGameList/?server="+server, 
+            dataType:"json",  
+            
+            success:function(data){ 
+                games = data;
+                createGames('pk'+server,games);
+            },
+            error: function (e) {
+                console.log(e);
+            } 
+        });
+}
+function createGames(id,games){
+  var gameType = parseInt(games.gameType);
+      var BLOCKH = 60;
+      var firstLength = 0;
+      var allLun = 0;
+      if (gameType == 0){
+        firstLength = 0;
+        for (var i=0;i<games.gameList.length;i++){
+          if (parseInt(games.gameList[i].gameLun)==0){
+            firstLength = firstLength + 1;
+          }
+        }
+        allLun = Math.ceil(Math.log(firstLength*2)/Math.log(2))+1;
+      
+      }else{
+        for (var i=0;i<games.gameList.length;i++){
+          if (parseInt(games.gameList[i].gameLun)>allLun){
+            allLun = parseInt(games.gameList[i].gameLun);
+          }
+        }
+        allLun = allLun + 1;
+      }
+      var gameL= new Array();
+      if (gameType == 0){
+        for (var i=0;i<allLun;i++){
+          gameL[i]=new Array();
+          for(var j=0;j<Math.pow(2,allLun-1);j++){
+            gameL[i][j] = "待定"
+          }
+        }
+        for (var i=0;i<games.gameList.length;i++){
+          gameLun = parseInt(games.gameList[i].gameLun);
+          gameNum = parseInt(games.gameList[i].gameNum);
+          if(games.gameList[i].player1.length>0){
+            gameL[gameLun][gameNum*2]=games.gameList[i].player1;
+          }
+          if(games.gameList[i].player2.length>0){
+            gameL[gameLun][gameNum*2+1]=games.gameList[i].player2;
+          
+          }
+          
+          if (games.gameList[i].gameResult.length>0 && gameType == 0){
+            gameL[gameLun+1][gameNum]=games.gameList[i].gameResult;
+          }
+        }
+      }else{
+        for (var i=0;i<allLun;i++){
+          gameL[i]=new Array();
+          for(var j=0;j<Math.ceil(games.gameList.length / allLun);j++){
+            gameL[i][j] = ""
+          }
+        }
+        for (var i=0;i<games.gameList.length;i++){
+          gameLun = parseInt(games.gameList[i].gameLun);
+
+          gameNum = parseInt(games.gameList[i].gameNum);
+          p1str='';
+          p2str='';
+          if(games.gameList[i].gameResult.length>0){
+            if(games.gameList[i].gameResult == games.gameList[i].player1)
+              p1str = '(+' + games.gameList[i].gameScore + ')';
+            else if(games.gameList[i].gameResult == games.gameList[i].player2)
+              p2str = '(+' + games.gameList[i].gameScore + ')';
+          }
+          gameL[gameLun][gameNum]=games.gameList[i].player1 + p1str + 'vs' +games.gameList[i].player2 + p2str;
+        }
+      }
+      
+      var heng_width = 1 / allLun*100;
+      var heng_height;
+      if (gameType == 0){
+        heng_height = BLOCKH * Math.ceil(Math.pow(2,allLun-1)/2);
+      }else{
+        heng_height = BLOCKH * Math.ceil(games.gameList.length / allLun);
+      }
+      var colorTab = ['#f6f5ec','#d9d6c3','#d1c7b7','#f2eada','#d3d7d4','#999d9c']
+      for (var i = 0; i <allLun; i++) {
+        $('.'+id).append('<div class="pkLie" id="'+id+i+'"></div>');
+        $('#'+id+i).css('background',colorTab[i]);
+        if (gameType == 0){
+           blockHeight = Math.floor(BLOCKH * Math.pow(2,i) / 2);
+           console.log(blockHeight);
+           blockNum = Math.floor(Math.pow(2, allLun - 1 - i));
+        }else{
+           blockHeight = BLOCKH;
+           blockNum = Math.ceil(games.gameList.length / allLun);
+        }
+        for (var j=0;j<blockNum;j++){
+          $('#'+id+i).append('<p class="pkText" style="line-height:'+ blockHeight+'px">' + gameL[i][j] + '</p>');
+          //$('#pkA'+i).css('line-height',blockHeight);
+        }
+
+      }
+      $('.'+id).css('height',heng_height+'px');
+      $('.'+id+' .pkLie').css('width',heng_width+'%');
+      $('.'+id+' .pkLie').css('height',heng_height+'px');
+      blockW = $('.'+id+' .pkLie').innerWidth();
+      $('.'+id).css('font-size',blockW/22+'px');
+}
+</script> 
+<p class="law">
+  内容均来自网络或自行测试得出，如有侵权，立即删除
+  <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274974079'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1274974079%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+</p>
+</body>
+</html>
