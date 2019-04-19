@@ -11,7 +11,7 @@ function getCookie(c_name)
 
 if (document.cookie.length>0)
   {
-  	console.log('ok');
+  	// console.log('ok');
   c_start=document.cookie.indexOf(c_name + "=")
   if (c_start!=-1)
     { 
@@ -27,13 +27,28 @@ return ""
 function checkCookie(newversion)
 {
 	lastversion=getCookie('version');
-	console.log(lastversion);
+	// console.log(lastversion);
 	if (lastversion!=null && lastversion==newversion){
 
 	}else {
 		setCookie('version',newversion,365);
 		if (confirm("检查到有新版本更新，是否查看更新日志？")){
 			window.location.href="updatelog.html";
+		}else{
+
+		}
+	}
+}
+function checkCookieNotice(newnotice,noticeContent,noticeLink)
+{
+	lastnotice=getCookie('notice');
+	console.log(lastversion);
+	if (lastnotice!=null && lastnotice==newnotice){
+
+	}else {
+		setCookie('notice',newnotice,365);
+		if (confirm(noticeContent)){
+			window.location.href=noticeLink;
 		}else{
 
 		}
