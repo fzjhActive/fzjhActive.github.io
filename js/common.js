@@ -1,3 +1,4 @@
+
 function setCookie(c_name,value,expiredays)
 {
 	var exdate=new Date()
@@ -42,7 +43,7 @@ function checkCookie(newversion)
 function checkCookieNotice(newnotice,noticeContent,noticeLink)
 {
 	lastnotice=getCookie('notice');
-	console.log(lastversion);
+	
 	if (lastnotice!=null && lastnotice==newnotice){
 
 	}else {
@@ -53,4 +54,16 @@ function checkCookieNotice(newnotice,noticeContent,noticeLink)
 
 		}
 	}
+}
+
+function isBaned(ip)
+{
+	BAN_LIST=["2409:894c:2:5402:ed93:f4ba:7a0f:3ff4"];
+	console.log(BAN_LIST);
+	for(i=0;i<BAN_LIST.length;i++){
+		if (BAN_LIST[i]==ip){
+			return true;
+		}
+	}
+	return false;
 }

@@ -12,6 +12,8 @@
 <script src="js/version.js"></script>
 <script src="js/math.min.js"></script>
 <script src="js/common.js"></script>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script> 
+
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <style type="text/css">
   body {
@@ -302,13 +304,18 @@
     var resultContent;
     var finishFlag = true;
     var result = new Array();
-    $(document).ready(function(){ 
-      $('#version').empty();
-      $('#version').html("切换门派/重数查看主动效果，悟性为先天+后天值。鼠标放在技能上方或点击技能可查看更多详细信息。最近更新时间"+version);
-      checkCookie(version);
-      checkCookieNotice(notice,noticeContent,noticeLink);
-      if (finishFlag){
-       initSearchList();
+    $(document).ready(function(){
+      if(isBaned(returnCitySN["cip"])){
+      	window.location.href="about:blank";
+      }else{
+      	$('#version').empty();
+	    $('#version').html("切换门派/重数查看主动效果，悟性为先天+后天值。鼠标放在技能上方或点击技能可查看更多详细信息。最近更新时间"+version);
+	    checkCookie(version);
+	    checkCookieNotice(notice,noticeContent,noticeLink);
+	    if (finishFlag){
+	      initSearchList();
+        }
+      
      }  
    });
 
