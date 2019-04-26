@@ -88,7 +88,9 @@
       font-weight: bold;
     }
   }
-
+  a{
+  	font-weight: 600;
+  }
   .select {
     margin: 0 2.5%;
     
@@ -163,15 +165,15 @@
   border-radius: 10px;
   position:fixed;
   bottom: 10%;
-  left: 10%;
+  left: 9%;
   z-index: 999;
   text-align: left;
   max-height: 80%;
   overflow-y: auto;
 }
-.skillInfo:hover .skillInfoWindow{
+/*.skillInfo:hover .skillInfoWindow{
   display: block;
-}
+}*/
 .closebutton {
   float:right;
   background: rgba(224, 224, 224, 0.8);
@@ -301,6 +303,7 @@
 
    <script>
     var searchContent;
+    var clickFlag=true;
     var resultContent;
     var finishFlag = true;
     var result = new Array();
@@ -309,7 +312,7 @@
       	window.location.href="about:blank";
       }else{
       	$('#version').empty();
-	    $('#version').html("切换门派/重数查看主动效果，悟性为先天+后天值。鼠标放在技能上方或点击技能可查看更多详细信息。最近更新时间"+version);
+	    $('#version').html("切换门派/重数查看主动效果，悟性为先天+后天值。点击粗体部分可查看更多详细信息。最近更新时间"+version);
 	    checkCookie(version);
 	    checkCookieNotice(notice,noticeContent,noticeLink);
 	    if (finishFlag){
@@ -318,6 +321,9 @@
       
      }  
    });
+  
+
+
 
     $('.searcher-text').on('input', function() {
       if (finishFlag){
@@ -329,6 +335,16 @@
      	}
      }  
    });
+//   
+    $(document).on('click',function(e){
+
+    	// console.log( $(e.target).attr('id'));
+
+      if (clickFlag){
+        $('.skillInfoWindow').css('display',"none");
+      }
+      clickFlag=true;
+    });
     $('.searcher-text2').on('input', function() {
       if (finishFlag){
       	searchContent = (replaceIllegalStr($('.searcher-text2').val()));
@@ -368,6 +384,7 @@
       }
       
     });
+    
     function searchSkill(){
       finishFlag = false;
       resultContent = "";
@@ -399,12 +416,12 @@
 	    resultContent = resultContent + "<td data-label=\"主动\">"+skillJson[i]["name"]+"</td>";
 	    resultContent = resultContent + "<td data-label=\"使用要求\">"+skillJson[i]["cons"]+"</td>";
 	    resultContent = resultContent + "<td data-label=\"描述\">"+skillJson[i]["desc"]+"</td>";
-	    resultContent = resultContent + "<td data-label=\"效果系数\">"+skillJson[i]["effectAll"]+"</td>";
+	    resultContent = resultContent + "<td data-label=\"效果系数\" class=\"effectClick\" id=\"effectFact"+ i +"\"><a onclick=\"onclicktr("+i+")\">"+skillJson[i]["effectAll"]+"</a></td>";
 	    resultContent = resultContent + "<td data-label=\"冷却时间\">"+skillJson[i]["cd"]+"</td>";
 	    resultContent = resultContent + "<td data-label=\"内力消耗\">"+skillJson[i]["cost"]+"</td>";
 	    resultContent = resultContent + "<td data-label=\"领悟方式\">"+skillJson[i]["learnMethod"]+"</td>";
 	    resultContent = resultContent + "<td data-label=\"所需残页\">"+pageNum + "("+skillJson[i]["level"]+")</td>";
-	    resultContent = resultContent + "<td class=\"skillInfoWindow\">";
+	    resultContent = resultContent + "<td class=\"skillInfoWindow\" id=\"effectFactWindow"+ i +"\">";
 
 	    resultContent = resultContent + "<center><b>" + skillJson[i]["name"] + "</b></center>";
 	    resultContent = resultContent + skillJson[i]["effectInfo"];
@@ -445,12 +462,12 @@
 	    resultContent = resultContent + "<td data-label=\"主动\">"+skillJson[i]["name"]+"</td>";
 	    resultContent = resultContent + "<td data-label=\"使用要求\">"+skillJson[i]["cons"]+"</td>";
 	    resultContent = resultContent + "<td data-label=\"描述\">"+skillJson[i]["desc"]+"</td>";
-	    resultContent = resultContent + "<td data-label=\"效果系数\">"+skillJson[i]["effectAll"]+"</td>";
+	     resultContent = resultContent + "<td data-label=\"效果系数\" class=\"effectClick\" id=\"effectFact"+ i +"\"><a onclick=\"onclicktr("+i+")\">"+skillJson[i]["effectAll"]+"</a></td>";
 	    resultContent = resultContent + "<td data-label=\"冷却时间\">"+skillJson[i]["cd"]+"</td>";
 	    resultContent = resultContent + "<td data-label=\"内力消耗\">"+skillJson[i]["cost"]+"</td>";
 	    resultContent = resultContent + "<td data-label=\"领悟方式\">"+skillJson[i]["learnMethod"]+"</td>";
 	    resultContent = resultContent + "<td data-label=\"所需残页\">"+pageNum + "("+skillJson[i]["level"]+")</td>";
-	    resultContent = resultContent + "<td class=\"skillInfoWindow\">";
+	    resultContent = resultContent + "<td class=\"skillInfoWindow\" id=\"effectFactWindow"+ i +"\">";
 
 	    resultContent = resultContent + "<center><b>" + skillJson[i]["name"] + "</b></center>";
 	    resultContent = resultContent + skillJson[i]["effectInfo"];
@@ -501,7 +518,20 @@ function string2formula(str) {
 		
 	}
 }
-
+function onclicktr(index){
+	console.log(index);
+	clickFlag= false;
+	
+	var displayStatus = $('#effectFactWindow'+index).css('display');
+      if (displayStatus == "block"){
+      	$('.skillInfoWindow').css('display',"none");
+        $('#effectFactWindow'+index).css('display',"none");
+      }
+      else{
+      	$('.skillInfoWindow').css('display',"none");
+        $('#effectFactWindow'+index).css('display',"block");
+      }
+}
 
 </script>
 <p class="law">
