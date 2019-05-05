@@ -105,7 +105,7 @@ function calculations(){
 		var needToCal = this.subList[0];
 		if (this.subList.length>1){
 			for(var j=0;j<allNeedList.length;j++){
-				var reg = new RegExp( 'allNeedList[j]' , "g" );
+				var reg = new RegExp( allNeedList[j] , "g" );
 				this.subListCondition[0] = this.subListCondition[0].replace(reg,"results["+allNeedList[j]+"]");
 			}
 			// console.log(this.subListCondition[0]);
@@ -116,7 +116,7 @@ function calculations(){
 			}
 		}
 		for(var j=0;j<allNeedList.length;j++){
-			var reg = new RegExp( 'allNeedList[j]' , "g" );
+			var reg = new RegExp( allNeedList[j] , "g" );
 			needToCal = needToCal.replace(reg,"results['"+allNeedList[j]+"']");
 		}
 		var reg = new RegExp('\\^' , "g" );
