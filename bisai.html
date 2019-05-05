@@ -74,6 +74,8 @@
   line-height: 30px;
   margin:0;
   text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
  }
  .tooltip { 
   display: none;
@@ -92,6 +94,7 @@
   transition:  display .5s ease-in-out;
   -webkit-transition: display .5s ease-in-out;
   -moz-transition: display .5s ease-in-out;
+  
  }
  
 </style>
@@ -117,10 +120,10 @@
 
       <div class="menu">
         <ul id="menu_list">
-          <li><a href="index.html">主动查询表</a></li>
-          <li><a href="exam.html">乡试与灯谜</a></li>
-          <li><a href="exam2.html">殿试辅助</a></li>
-          <li><a href="updatelog.html">更新日志</a></li>
+          <li><a href="https://fzjhactive.github.io/index.html">主动查询表</a></li>
+          <li><a href="https://fzjhactive.github.io/exam.html">乡试与灯谜</a></li>
+          <li><a href="https://fzjhactive.github.io/exam2.html">殿试辅助</a></li>
+          <li><a href="https://fzjhactive.github.io/updatelog.html">更新日志</a></li>
           <li><a href="bisai.html">武林大会</a></li>
         </ul>
       </div>
@@ -158,6 +161,11 @@
        <div class = "pkC">
        </div>
        <p class="pkTitle2">
+       C-组
+       </p>
+       <div class = "pkC-">
+       </div>
+       <p class="pkTitle2">
        团体赛（未开始）
        </p>
      </div>
@@ -167,6 +175,7 @@
       initGames('A');
       initGames('B');
       initGames('C');
+      initGames('C-');
       
       
       
@@ -184,7 +193,7 @@ function initGames(server){
   var games;
         $.ajax({
             type:"GET",
-            url:"http://106.13.117.174:8000/getGameList/?server="+server, 
+            url:"http://127.0.0.1:8000/getGameList/?server="+server, 
             dataType:"json",  
             
             success:function(data){ 
@@ -269,7 +278,7 @@ function createGames(id,games){
       if (gameType == 0){
         heng_height = BLOCKH * Math.ceil(Math.pow(2,allLun-1)/2);
       }else{
-        heng_height = BLOCKH * Math.ceil(games.gameList.length / allLun);
+        heng_height = BLOCKH * (Math.ceil(games.gameList.length / allLun) + 1);
       }
       var colorTab = ['#f6f5ec','#d9d6c3','#d1c7b7','#f2eada','#d3d7d4','#999d9c']
       for (var i = 0; i <allLun; i++) {
@@ -281,7 +290,7 @@ function createGames(id,games){
            blockNum = Math.floor(Math.pow(2, allLun - 1 - i));
         }else{
            blockHeight = BLOCKH;
-           blockNum = Math.ceil(games.gameList.length / allLun);
+           blockNum = Math.ceil(games.gameList.length / allLun) +1 ;
         }
         for (var j=0;j<blockNum;j++){
           $('#'+id+i).append('<p class="pkText" style="line-height:'+ blockHeight+'px">' + gameL[i][j] + '</p>');

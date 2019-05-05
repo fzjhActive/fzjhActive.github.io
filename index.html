@@ -193,6 +193,23 @@
 #familyselect{
   margin-top: 15px;
 }
+.calWindow{
+  display: none;
+  background-color: rgba(224, 224, 224);
+  width: 80%;
+  min-height: : 30%;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  position:fixed;
+  top: 20%;
+  left: 9%;
+  z-index: 1001;
+  text-align: left;
+  max-height: 80%;
+  overflow-y: auto;
+  padding: 10px;
+  text-align: center;
+}
 </style>
 <!--[if IE]>
 		
@@ -297,6 +314,8 @@
      <div class="searcher-result">
 
      </div>
+     <div class="calWindow">
+     </div>
    </div>
 
 
@@ -304,6 +323,7 @@
    <script>
     var searchContent;
     var clickFlag=true;
+    var clickFlag2=true;
     var resultContent;
     var finishFlag = true;
     var result = new Array();
@@ -344,6 +364,10 @@
         $('.skillInfoWindow').css('display',"none");
       }
       clickFlag=true;
+      // if (clickFlag2){
+      //   $('.calWindow').css('display',"none");
+      // }
+      // clickFlag2=true;
     });
     $('.searcher-text2').on('input', function() {
       if (finishFlag){
@@ -532,7 +556,67 @@ function onclicktr(index){
         $('#effectFactWindow'+index).css('display',"block");
       }
 }
+function calthisEffect(skillIndex, effectIndex){
 
+	clickFlag2= false;
+	var displayStatus = $('.calWindow').css('display');
+	console.log(displayStatus);
+      if (displayStatus == "block"){
+      	$('.calWindow').css('display',"none");
+      }
+      else{
+      	$('.calWindow').css('display',"block");
+      }
+	// $('.calWindow').css("display")="block";
+	$('.calWindow').empty();
+	var cal = new calculations();
+	cal.create(skillJson[skillIndex]["effectGS"][effectIndex]);
+	// console.log(cal.needList);
+	
+	var htmlString = "";
+	var needList = Array.from(cal.needList);
+	var needListCN = Array.from(cal.needListCN);
+	for(var i=0;i<needList.length;i++){
+		var varInCookie=getCookie(needList[i]);
+		htmlString = htmlString + needListCN[i] + "<input id = \"" + needList[i]+"\" value = " + varInCookie+"></input><br/>"
+
+	}
+	var effectPart = skillJson[skillIndex]["effectAll"].split("<br/>")[effectIndex];
+	var effectName = effectPart.slice(0,effectPart.indexOf("]")+1);
+	var effectTime = parseFloat(effectPart.slice(effectPart.indexOf("持续时间")+"持续时间".length,effectPart.indexOf("<",effectPart.indexOf("持续时间"))));
+	var effectTimeInt = Math.ceil(effectTime/2.0);
+	var effectTimeStr="";
+	if(effectTimeInt>0){
+		effectTimeStr = "x" + effectTimeInt + "次（每2秒触发一次），需要一定条件触发的主动则没有固定次数";
+	}
+	htmlString = htmlString + effectName + ":\t<span id='effectCalResult'>___</span>"+ effectTimeStr+"<br/>";
+	htmlString = htmlString + "<input type='submit' onclick='calEffectFinal("+skillIndex+","+effectIndex+")' value='计算'></input><br/>";
+	htmlString = htmlString + "<input type='submit' onclick='closeCalWindow()' value='关闭'></input><br/>";
+	$('.calWindow').html(htmlString);
+}
+function calEffectFinal(skillIndex, effectIndex){
+	clickFlag2 = false;
+	clickFlag = false;
+	var cal = new calculations();
+	cal.create(skillJson[skillIndex]["effectGS"][effectIndex]);
+	var needList = Array.from(cal.needList);
+	var needListCN = Array.from(cal.needListCN);
+	var results = {};
+	for(var i=0;i<needList.length;i++){
+		//console.log(needList[i]);
+		//console.log(document.getElementById(needList[i]).value);
+
+		results[needList[i]] = parseInt(document.getElementById(needList[i]).value.replace(/[^\d]/g,''));
+		setCookie(needList[i], results[needList[i]],365);
+	}
+
+	var result = cal.cal(results,parseInt(skillJson[skillIndex]["cost"]));
+	$('#effectCalResult').html(result);
+	// console.log(result);
+}
+function closeCalWindow(){
+	$('.calWindow').css('display',"none");
+}
 </script>
 <p class="law">
   内容均来自网络或自行测试得出，如有侵权，立即删除
