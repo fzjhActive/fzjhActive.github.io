@@ -83,6 +83,8 @@ function calculations(){
 		}else{
 			return;
 		}
+		var reg = new RegExp("侠义" , "g" );
+		calString = calString.replace(reg,"zhengqi");
 		if (calString.indexOf("if")>-1){
 			var conditions = calString.slice(calString.indexOf("if ")+3, calString.indexOf(" then "));
 			this.subList.push(calString.slice(calString.indexOf("then return")+"then return".length, calString.indexOf("else ")));
