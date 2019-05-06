@@ -74,8 +74,8 @@ function calculations(){
 	this.subListCondition = new Array();
 	this.needList = new Set();
 	this.needListCN = new Set();
-	var allNeedList = ["avgqiatk", "dssklv", "qiMax2","qimax","roleLv","neiliMax","currcon","currdex","currstr","currint","looks","CN","wdamage"];
-	var allNeedListCN = ["平均气血攻击", "毒术等级", "初始气血上限","气血上限","人物等级","内力上限","根骨","身法","臂力","悟性","颜值","神兵淬炼次数","武器伤害力"];
+	var allNeedList = ["avgqiatk", "dssklv", "qiMax2","qimax","roleLv","neiliMax","currcon","currdex","currstr","currint","looks","CN","wdamage","zhengqi"];
+	var allNeedListCN = ["平均气血攻击", "毒术等级", "初始气血上限","气血上限","人物等级","内力上限","根骨","身法","臂力","悟性","颜值","神兵淬炼次数","武器伤害力","侠义值"];
 
 	this.create = function(calString){
 		if(typeof(calString)==="string"){
@@ -153,7 +153,7 @@ function calculations(){
 			needToCal = needToCal.slice(0,indexOfMin - "min(".length) + minSub + needToCal.slice(subEnd + 1,needToCal.length);
 		}
 		var result = eval(needToCal);
-		return result;
+		return parseInt(result);
 		// console.log(result);
 	}
 }
