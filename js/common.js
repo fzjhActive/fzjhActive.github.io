@@ -66,7 +66,13 @@ function isBaned(ip)
 	}
 	return false;
 }
-
+function MathCeil(number){
+	var temp = parseInt(number);
+	if (temp<number){
+		temp = temp + 1;
+	}
+	return temp;
+}
 
 
 function calculations(){

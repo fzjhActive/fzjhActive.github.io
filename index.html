@@ -10,7 +10,6 @@
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/activeSkill.js"></script>
 <script src="js/version.js"></script>
-<script src="js/math.min.js"></script>
 <script src="js/common.js"></script>
 <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script> 
 
@@ -437,7 +436,7 @@
 	  for(var j in result){
 	    var i = result[j];
 	    
-	    pageNum=Math.ceil(0.15*(100*skilllevel)*(100*skilllevel)*(100*skilllevel)/500*100/(Number(skillJson[i]["potEfficiency"])*(200+smart)/200)/10/500);
+	    pageNum=MathCeil(0.15*(100*skilllevel)*(100*skilllevel)*(100*skilllevel)/500*100/(Number(skillJson[i]["potEfficiency"])*(200+smart)/200)/10/500);
 	    resultContent = resultContent + "<tr class=\"skillInfo\">";
 	    
 	    resultContent = resultContent + "<td data-label=\"武学\">"+skillJson[i]["SkillName"]+"</td>";
@@ -483,7 +482,7 @@
 	  for(var j in result){
 	    var i = result[j];
 	    //console.log(i);
-	    pageNum=Math.ceil(0.15*(100*skilllevel)*(100*skilllevel)*(100*skilllevel)/500*100/(Number(skillJson[i]["potEfficiency"])*(200+smart)/200)/10/500);
+	    pageNum=MathCeil(0.15*(100*skilllevel)*(100*skilllevel)*(100*skilllevel)/500*100/(Number(skillJson[i]["potEfficiency"])*(200+smart)/200)/10/500);
 	    resultContent = resultContent + "<tr class=\"skillInfo\">";
 	    
 	    resultContent = resultContent + "<td data-label=\"武学\">"+skillJson[i]["SkillName"]+"</td>";
@@ -588,7 +587,7 @@ function calthisEffect(skillIndex, effectIndex){
 	var effectPart = skillJson[skillIndex]["effectAll"].split("<br/>")[effectIndex];
 	var effectName = effectPart.slice(0,effectPart.indexOf("]")+1);
 	var effectTime = parseFloat(effectPart.slice(effectPart.indexOf("持续时间")+"持续时间".length,effectPart.indexOf("<",effectPart.indexOf("持续时间"))));
-	var effectTimeInt = Math.ceil(effectTime/2.0);
+	var effectTimeInt = MathCeil(effectTime/2.0);
 	var effectTimeStr="";
 	if(effectTimeInt>0){
 		effectTimeStr = "x" + effectTimeInt + "次（每2秒触发一次），需要一定条件触发的主动则没有固定次数";
