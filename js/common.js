@@ -161,7 +161,12 @@ function calculations(){
 			needToCal = needToCal.slice(0,indexOfMin - "min(".length) + minSub + needToCal.slice(subEnd + 1,needToCal.length);
 		}
 		var result = eval(needToCal);
-		return parseInt(result);
+		if(result <0){
+			return '-' + parseInt(-result)+'.'+parseInt(-result*100+parseInt(result)*100);
+		}else{
+			return parseInt(result)+'.'+parseInt(result*100-parseInt(result)*100);
+		}
+		 
 		// console.log(result);
 	}
 }

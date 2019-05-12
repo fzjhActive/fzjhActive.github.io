@@ -338,6 +338,10 @@
 	    $('#version').html("切换门派/重数查看主动效果，悟性为先天+后天值。点击粗体部分可查看更多详细信息。最近更新时间"+version);
 	    checkCookie(version);
 	    checkCookieNotice(notice,noticeContent,noticeLink);
+	    var family = getCookie('familyselect');
+	    if (family.length>0){
+	    	$("#familyselect").val(family); 
+	    }
 	    if (finishFlag){
 	      initSearchList();
         }
@@ -467,6 +471,7 @@
       result = new Array();
       var options1=$("#familyselect option:selected");
       family = options1.val();
+      setCookie('familyselect',family,365);
       var options2=$("#skilllevel option:selected");
       skilllevel = options2.val();
       smart = Number(replaceIllegalStr($('.searcher-text').val()));
