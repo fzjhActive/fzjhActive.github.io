@@ -284,6 +284,7 @@
             <option value="日月神教">日月神教</option>
             <option value="武当">武当</option>
             <option value="金钱帮">金钱帮</option>
+            <option value="神兵">神兵特性</option>
           </select>
         </div>
         <div class="chongshu">
@@ -339,6 +340,11 @@
 	    checkCookie(version);
 	    checkCookieNotice(notice,noticeContent,noticeLink);
 	    var family = getCookie('familyselect');
+	    var chongshu = getCookie('chongshu');
+	    
+	    if (chongshu.length>0){
+	    	$("#skilllevel").val(chongshu); 
+	    }
 	    if (family.length>0){
 	    	$("#familyselect").val(family); 
 	    }
@@ -470,8 +476,11 @@
       resultContent = "";
       result = new Array();
       var options1=$("#familyselect option:selected");
+      var options2=$("#skilllevel option:selected");
       family = options1.val();
+      chongshu = options2.val();
       setCookie('familyselect',family,365);
+      setCookie('chongshu',chongshu,365);
       var options2=$("#skilllevel option:selected");
       skilllevel = options2.val();
       smart = Number(replaceIllegalStr($('.searcher-text').val()));
@@ -564,7 +573,7 @@ function onclicktr(index){
         $('#effectFactWindow'+index).css('display',"block");
       }
 }
-function calthisEffect(skillIndex, effectIndex){
+function calthisEffect(skillIndex, effectIndex, effectIndex2){
 
 	clickFlag2= false;
 	var displayStatus = $('.calWindow').css('display');
@@ -578,9 +587,14 @@ function calthisEffect(skillIndex, effectIndex){
 	// $('.calWindow').css("display")="block";
 	$('.calWindow').empty();
 	var cal = new calculations();
-	cal.create(skillJson[skillIndex]["effectGS"][effectIndex]);
-	// console.log(cal.needList);
-	
+	if(typeof(skillJson[skillIndex]["effectGS"])==="string"){
+			calString=skillJson[skillIndex]["effectGS"];
+		}else{
+			calString=skillJson[skillIndex]["effectGS"][effectIndex];
+		}
+	cal.create(calString);
+	//console.log(skillIndex);
+	//console.log(effectIndex);
 	var htmlString = "";
 	var needList = Array.from(cal.needList);
 	var needListCN = Array.from(cal.needListCN);
@@ -589,7 +603,7 @@ function calthisEffect(skillIndex, effectIndex){
 		htmlString = htmlString + needListCN[i] + "<input id = \"" + needList[i]+"\" value = " + varInCookie+"></input><br/>"
 
 	}
-	var effectPart = skillJson[skillIndex]["effectAll"].split("<br/>")[effectIndex];
+	var effectPart = skillJson[skillIndex]["effectAll"].split("<br/>")[effectIndex2];
 	var effectName = effectPart.slice(0,effectPart.indexOf("]")+1);
 	var effectTime = parseFloat(effectPart.slice(effectPart.indexOf("持续时间")+"持续时间".length,effectPart.indexOf("<",effectPart.indexOf("持续时间"))));
 	var effectTimeInt = MathCeil(effectTime/2.0);
@@ -606,7 +620,12 @@ function calEffectFinal(skillIndex, effectIndex){
 	clickFlag2 = false;
 	clickFlag = false;
 	var cal = new calculations();
-	cal.create(skillJson[skillIndex]["effectGS"][effectIndex]);
+	if(typeof(skillJson[skillIndex]["effectGS"])==="string"){
+			calString=skillJson[skillIndex]["effectGS"];
+		}else{
+			calString=skillJson[skillIndex]["effectGS"][effectIndex];
+		}
+	cal.create(calString);
 	var needList = Array.from(cal.needList);
 	var needListCN = Array.from(cal.needListCN);
 	var results = {};
