@@ -74,14 +74,18 @@ function MathCeil(number){
 	return temp;
 }
 
-
+function MathFloor(number){
+	var temp = parseInt(number);
+	
+	return temp;
+}
 function calculations(){
 	this.subList = new Array();
 	this.subListCondition = new Array();
 	this.needList = new Set();
 	this.needListCN = new Set();
-	var allNeedList = ["avgqiatk", "dssklv", "qiMax2","qimax","roleLv","neiliMax","currcon","currdex","currstr","currint","looks","CN","wdamage","zhengqi","weight"];
-	var allNeedListCN = ["平均气血攻击", "毒术等级", "初始气血上限","气血上限","人物等级","内力上限","根骨","身法","臂力","悟性","颜值","神兵淬炼次数","武器伤害力","侠义值","武器重量"];
+	var allNeedList = ["avgqiatk", "dssklv", "qiMax2","qimax","roleLv","neiliMax","currcon","currdex","currstr","currint","currCon","currDex","currStr","currInt","looks","CN","wdamage","zhengqi","weight"];
+	var allNeedListCN = ["平均气血攻击", "毒术等级", "初始气血上限","气血上限","人物等级","内力上限","根骨","身法","臂力","悟性","根骨","身法","臂力","悟性","颜值","神兵淬炼次数","武器伤害力","侠义值","武器重量"];
 
 	this.create = function(calString){
 		if(typeof(calString)==="string"){
