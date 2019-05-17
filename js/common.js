@@ -80,8 +80,8 @@ function calculations(){
 	this.subListCondition = new Array();
 	this.needList = new Set();
 	this.needListCN = new Set();
-	var allNeedList = ["avgqiatk", "dssklv", "qiMax2","qimax","roleLv","neiliMax","currcon","currdex","currstr","currint","looks","CN","wdamage","zhengqi"];
-	var allNeedListCN = ["平均气血攻击", "毒术等级", "初始气血上限","气血上限","人物等级","内力上限","根骨","身法","臂力","悟性","颜值","神兵淬炼次数","武器伤害力","侠义值"];
+	var allNeedList = ["avgqiatk", "dssklv", "qiMax2","qimax","roleLv","neiliMax","currcon","currdex","currstr","currint","looks","CN","wdamage","zhengqi","weight"];
+	var allNeedListCN = ["平均气血攻击", "毒术等级", "初始气血上限","气血上限","人物等级","内力上限","根骨","身法","臂力","悟性","颜值","神兵淬炼次数","武器伤害力","侠义值","武器重量"];
 
 	this.create = function(calString){
 		if(typeof(calString)==="string"){
@@ -114,7 +114,7 @@ function calculations(){
 		if (this.subList.length>1){
 			for(var j=0;j<allNeedList.length;j++){
 				var reg = new RegExp( allNeedList[j] , "g" );
-				this.subListCondition[0] = this.subListCondition[0].replace(reg,"results["+allNeedList[j]+"]");
+				this.subListCondition[0] = this.subListCondition[0].replace(reg,"results['"+allNeedList[j]+"']");
 			}
 			// console.log(this.subListCondition[0]);
 			if (eval(this.subListCondition[0])){
