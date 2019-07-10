@@ -79,6 +79,9 @@ function MathFloor(number){
 	
 	return temp;
 }
+function random(a,b){
+	return (a+b)/2;
+}
 function calculations(){
 	this.subList = new Array();
 	this.subListCondition = new Array();
