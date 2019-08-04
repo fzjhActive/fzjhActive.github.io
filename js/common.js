@@ -96,6 +96,8 @@ function calculations(){
 		}else{
 			return;
 		}
+		console.log(calString);
+		calString = calString.replace('  ', ' ');
 		var reg = new RegExp("侠义" , "g" );
 		calString = calString.replace(reg,"zhengqi");
 		if (calString.indexOf("if")>-1){
