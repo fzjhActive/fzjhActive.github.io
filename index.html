@@ -285,6 +285,7 @@
           <li><a href="exam.html">乡试与灯谜</a></li>
           <li><a href="exam2.html">殿试辅助</a></li>
           <li><a href="updatelog.html">更新日志</a></li>
+		  <li><a href="walkthrough.html">游戏攻略</a></li>
         </ul>
       </div>
 
@@ -473,6 +474,7 @@
       resultContent = "";
       var options2=$("#skilllevel option:selected");
       skilllevel = options2.val();
+	  
       smart = Number(replaceIllegalStr($('.searcher-text').val()));
       result = new Array();
       searchContent = (replaceIllegalStr($('.searcher-text2').val()));
@@ -525,10 +527,14 @@
       var options2=$("#skilllevel option:selected");
       family = options1.val();
       chongshu = options2.val();
+	  
       setCookie('familyselect',family,365);
       setCookie('chongshu',chongshu,365);
       var options2=$("#skilllevel option:selected");
       skilllevel = options2.val();
+	  if(family==="神兵"){
+	     skilllevel = 1;
+	  }
       smart = Number(replaceIllegalStr($('.searcher-text').val()));
 
       for(var i=0; i<skillJson.length; i++){    
