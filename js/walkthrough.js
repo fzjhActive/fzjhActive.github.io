@@ -38,6 +38,7 @@ var arr = [
                 {
                     name: "经脉", 
                     children: [
+						{name: "放置江湖2019.08新增经脉天赋介绍v1.2.pdf"},
                         {name: "战斗经脉天赋详解v1.1.pdf"},
                         {name: "经脉天赋个人理解.pdf"},
                         {name: "经脉固本加点个人理解.pdf"},
@@ -49,7 +50,7 @@ var arr = [
                     children: [
                         {name: "神兵特性浅析.pdf"},
                         {name: "武器外观.png"},
-                        {name: "武学对应武器类型.xlsx"},
+                        {name: "武学对应武器类型20190810.pdf"},
 
                     ]
                 },
@@ -142,6 +143,7 @@ var arr = [
 		{
             name: "节日活动攻略",
             children: [
+				{name: "放置江湖2019中秋活动攻略.pdf"},
                 {name: "放置江湖2019七夕活动攻略.pdf"},
 				{name: "无间林任务初版攻略.pdf"},
 				{name: "放置江湖2019春分活动.pdf"},
