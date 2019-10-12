@@ -98,7 +98,7 @@ var arr = [
                 {
                     name: "师门任务", 
                     children: [
-                        {name: "师门任务攻略v0.4.pdf"},
+                        {name: "师门任务攻略v0.5.pdf"},
                         {name: "声望头衔v1.2.pdf"},
 
                     ]
