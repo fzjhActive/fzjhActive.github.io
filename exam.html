@@ -8,45 +8,29 @@
 <link rel="shortcut icon" href="img/icon.png" >
 <title>放置江湖乡试与灯谜查询</title>
 <script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/examXS.js"></script>
-<script src="js/version.js"></script>
-<link rel="stylesheet" type="text/css" href="css/style.css">
+
 <style type="text/css">
-  .searcher {
-   background: rgba(255, 255, 255, 0);
-   width: 100%;
-   text-align: center;
-   font-size: 16px;
- }
- .searcher-main {
-   background: #F4F4F4;
-   border-radius: 4px;
-   line-height: 20px;
- }
+  body {
+    margin: 0;
+    font-family: arial;
+  }
+  h1 {
+	font-size: 1.5em;
+	margin: 5%;
+  }
+  h2 {
+	font-size: 1.25em;
+	margin: 5%;
+  }
+  a {
+	word-wrap:break-word
+  }
 
- .searcher-text {
-   width: 80%;
-   text-align: center;
-   border: none;
-   outline: none;
-   background: #F4F4F4;
 
- }
 
- .searcher-cancel {
-   width: 10%;
-   height: 20px;
-   line-height: 20px;
-   color: #929292;
-   top: 5px;
- }
- .searcher-result {
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  overflow-y: auto;
-  margin-top: 125px;
-}
+
+
+ 
 </style>
 <!--[if IE]>
 		
@@ -65,157 +49,26 @@
     <![endif]-->
     <body>
 
+	<h1><center>由于国内访问本网站时延迟较大，今后主动查询表转移至国内平台。</center></h1>
+	<h2><center>欢迎收藏新的网址<a href="https://fzjhactive.gitee.io/exam.html">https://fzjhactive.gitee.io/</a></center></h2>
 
-
-
-      <div class="menu">
-        <ul id="menu_list">
-          <li><a href="index.html">主动查询表</a></li>
-          <li><a href="exam.html">乡试与灯谜</a></li>
-          <li><a href="exam2.html">殿试辅助</a></li>
-          <li><a href="updatelog.html">更新日志</a></li>
-		  <li><a href="walkthrough.html">游戏攻略</a></li>
-        </ul>
-      </div>
-      <div class="allcontainer">
-        <div class="note">
-          <div class="title">
-            <div id="menu_button">
-              <h1>放置江湖乡试与灯谜</h1>
-              <div id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-          <p>
-            <center>建议自行回答乡试问题,查询结束后按回车键可清除查询内容。欢迎GG大玩家服的大侠加入放置江湖大玩家交流群663553792</center>
-          </p>
-
-          <div class="searcher">
-            <p class="searcher-main">
-             <i><img src="img/search.png" width="20"/></i>
-             <input class="searcher-text" placeholder="输入题干或选项中的文字或拼音"></input>
-           </p>
-         </div>
-       </div>
-       <div class="searcher-result">
-       </div>
-     </div>
-     <script>
       
-      var searchContent;
-      var resultContent;
-      var result = new Array();
 
-      $('.searcher-text').on('input', function() {
-        initSearchList();
-      });
-      function initSearchList() {
-        resultContent = "";
-        result = new Array();
-        searchContent = replaceIllegalStr($('.searcher-text').val());
-        for(var i=0; i<examJson.length; i++){
-          for(var key in examJson[i]){
-           if(examJson[i][key].indexOf(searchContent)!=-1){
-            result.push(i)
-          }
-        }
-      }
-      result =uniq(result);
-      for(var j=0;j<result.length;j++){
-        var i = result[j];
-        console.log(i);
-        if(typeof(examJson[i]["question"])!= "undefined"){
-          resultContent = resultContent + "<p>" + examJson[i]["question"] + "</p>";
-        }
-        if(typeof(examJson[i]["answer1"])!= "undefined"){
-          if(examJson[i]["answer1"] == examJson[i]["rightAnswer"]){
-            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp<b>✔" + examJson[i]["answer1"] + "</b></p>";
-          }else{
-            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp" + examJson[i]["answer1"] + "</p>";
-          }
-        }
-        if(typeof(examJson[i]["answer2"])!= "undefined"){
-          if(examJson[i]["answer2"] == examJson[i]["rightAnswer"]){
-            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp<b>✔" + examJson[i]["answer2"] + "</b></p>";
-          }else{
-            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp" + examJson[i]["answer2"] + "</p>";
-          }
-        }
-        if(typeof(examJson[i]["answer3"])!= "undefined"){
-          if(examJson[i]["answer3"] == examJson[i]["rightAnswer"]){
-            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp<b>✔" + examJson[i]["answer3"] + "</b></p>";
-          }else{
-            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp" + examJson[i]["answer3"] + "</p>";
-          }
-        }
-        if(typeof(examJson[i]["answer4"])!= "undefined"){
-          if(examJson[i]["answer4"] == examJson[i]["rightAnswer"]){
-            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp<b>✔" + examJson[i]["answer4"] + "</b></p>";
-          }else{
-            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp" + examJson[i]["answer4"] + "</p>";
-          }
-        }
-        resultContent = resultContent + "</br>";
-      }
-      $('.searcher-result').empty();
-      $('.searcher-result').html(resultContent);
-    }
-    function uniq(array){
-      var temp = [];
-      for(var i = 0; i < array.length; i++){
-        if(temp.indexOf(array[i]) == -1){
-          temp.push(array[i]);
-        }
-      }
-      return temp;
-    }
-    function replaceIllegalStr(str) {
-     var reg;
-     var illegal_list = ["/", "\\",
-     "[", "]",
-     "{", "}",
-     "<", ">",
-     "＜", "＞",
-     "「", "」",
-     "：", "；",
-     "、", "•",
-     "^", "'", "\"",
-     "\r", "\r\n", "\\n", "\n"];
-     for (var i = 0; i < illegal_list.length; i++) {
-      if (str.indexOf(illegal_list[i]) >= 0) {
-       if (illegal_list[i] == '\\' || illegal_list[i] == '[') {
-        reg = new RegExp('\\' + illegal_list[i], "g");
-      } else {
-        reg = new RegExp(illegal_list[i], "g");
-      }
-      str = str.replace(reg, '');
-    }
-  }
-  return str.trim();
-}
-$('#menu_button').click(function(){
-  var displayStatus = $('.menu').css('display');
-  if (displayStatus == "block"){
-    $('.menu').css('display',"none");
-  }
-  else{
-    $('.menu').css('display',"block");
-  }
-  
-});
-$(document).keyup(function(event){
-  if(event.keyCode ==13){
-    $('.searcher-text').val("");
-  }
-});
-</script> 
-<p class="law">
-  内容均来自网络或自行测试得出，如有侵权，立即删除
-  <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274974079'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1274974079%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+
+   <script>
+
+    $(document).ready(function(){
+		if (confirm("本网站已停止更新，点击确定将跳转至新版主动查询表")){
+			window.location.href="https://fzjhactive.gitee.io/exam.html";
+		}else{
+
+		}
+   });
+
+</script>
+<center>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274974079'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1274974079%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
   </script>
-</p>
+</center>
 </body>
 </html>
