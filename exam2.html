@@ -8,55 +8,29 @@
 <link rel="shortcut icon" href="img/icon.png" >
 <title>放置江湖殿试辅助</title>
 <script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/book.js"></script>
-<script src="js/timu.js"></script>
-<script src="js/wenti.js"></script>
 
-<script src="js/version.js"></script>
-<link rel="stylesheet" type="text/css" href="css/style.css">
 <style type="text/css">
-  .searcher {
-   background: rgba(255, 255, 255, 0);
-   width: 100%;
-   text-align: center;
-   font-size: 16px;
- }
- .searcher-main {
-   background: #F4F4F4;
-   border-radius: 4px;
-   line-height: 20px;
- }
-
- .searcher-text {
-   width: 80%;
-   text-align: center;
-   border: none;
-   outline: none;
-   background: #F4F4F4;
-
- }
-select{
-    text-align: center;
-    margin: 0 auto;
-    width: 100%;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-    background: transparent;
+  body {
+    margin: 0;
+    font-family: arial;
   }
- .searcher-cancel {
-   width: 10%;
-   height: 20px;
-   line-height: 20px;
-   color: #929292;
-   top: 5px;
- }
- .searcher-result {
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  overflow-y: auto;
-  margin-top: 200px;
-}
+  h1 {
+	font-size: 1.5em;
+	margin: 5%;
+  }
+  h2 {
+	font-size: 1.25em;
+	margin: 5%;
+  }
+  a {
+	word-wrap:break-word
+  }
+
+
+
+
+
+ 
 </style>
 <!--[if IE]>
 		
@@ -75,310 +49,26 @@ select{
     <![endif]-->
     <body>
 
+	<h1><center>由于国内访问本网站时延迟较大，今后主动查询表转移至国内平台。</center></h1>
+	<h2><center>欢迎收藏新的网址<a href="https://fzjhactive.gitee.io/exam2">https://fzjhactive.gitee.io/</a></center></h2>
+
+      
 
 
+   <script>
 
-      <div class="menu">
-        <ul id="menu_list">
-          <li><a href="index.html">主动查询表</a></li>
-          <li><a href="exam.html">乡试与灯谜</a></li>
-          <li><a href="exam2.html">殿试辅助</a></li>
-          <li><a href="updatelog.html">更新日志</a></li>
-		  <li><a href="walkthrough.html">游戏攻略</a></li>
-        </ul>
-      </div>
-      <div class="allcontainer">
-        <div class="note">
-          <div class="title">
-            <div id="menu_button">
-              <h1>放置江湖殿试辅助</h1>
-              <div id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-          <p>
-            <center>建议自行进行殿试！查询结束后按回车键可清除查询内容。欢迎GG大玩家服的大侠加入放置江湖大玩家交流群663553792</center>
-          </p>
-          <div class="select">
-          <select required id="familyselect">
+    $(document).ready(function(){
+		if (confirm("本网站已停止更新，点击确定将跳转至新版主动查询表")){
+			window.location.href="https://fzjhactive.gitee.io/exam2.html";
+		}else{
 
-          </select>
-        </div>
-          <div class="searcher">
-            <p class="searcher-main">
-             <i><img src="img/search.png" width="20"/></i>
-             <input class="searcher-text" placeholder="输入提示内容，无提示请输入0，提示脑袋空空则本轮可以随意作答（都不会得分）"></input>
-           </p>
-         </div>
-       </div>
-       <div class="searcher-result">
-       </div>
-     </div>
-     <script>
-      var searchContent;
-      var resultContent;
-      var result = new Array();
-      $(document).ready(function (){
-        for (var i=0; i<timu.length; i++){
-          if (!(typeof(timu[i].question) == "undefined")){
-            var cont = timu[i].question; 
-            if (i==0){
-              cont = cont + "(请选择题目)"
-            }
-            var temp = i+1;
-            $('#familyselect').append("<option value='"+ temp +"'>" + cont + "</option>");
-          }  
-        }
+		}
+   });
 
-      });
-      $('.searcher-text').on('input', function() {
-        initSearchList();
-      });
-       $('#familyselect').on('change',function() {
-         initSearchList();
-       });
-      function initSearchList() {
-        resultContent = "";
-        result = new Array();
-        var sums = new Array(wenti.length-1);
-        for (var i=0;i<sums.length;i++){
-          sums[i]=0.0;
-        }
-        searchContent = replaceIllegalStr($('.searcher-text').val());
-        for(var i=0; i<book.length; i++){
-          for(var key in book[i]){
-           if(book[i][key].indexOf(searchContent)!=-1){
-            result.push(i);
-            // console.log(book[i][key]);
-            }
-          }
-        }
-        var select = $('#familyselect');
-        var selId = parseInt(select.val()) - 1;
-        var art = parseFloat(timu[selId].art);
-        var truth = parseFloat(timu[selId].truth);
-        var practical = parseFloat(timu[selId].practical);
-        var ambit = parseFloat(timu[selId].ambit);
-        var innovate = parseFloat(timu[selId].innovate);
-        // console.log(result);
-        result =uniq(result);
-        // console.log(result);
-        for(var j =0;j<result.length;j++){
-          var i = result[j];
-          
-          var acceptable = book[i].wenti.split(",");
-          for (var ii=0;ii<wenti.length-1;ii++){
-            if (wenti[ii].id in acceptable){
-              // console.log(art);
-              // console.log(art*parseFloat(wenti[ii].art)*parseFloat(book[i].art));
-              sums[ii]=sums[ii]+parseFloat(art*parseFloat(wenti[ii].art)*parseFloat(book[i].art)+truth*parseFloat(wenti[ii].truth)*parseFloat(book[i].truth)+practical*parseFloat(wenti[ii].practical)*parseFloat(book[i].practical)+ambit*parseFloat(wenti[ii].ambit)*parseFloat(book[ii].ambit)+innovate*parseFloat(wenti[ii].innovate)*parseFloat(book[ii].innovate));
-            }else{
-              sums[ii]=sums[ii]+0;
-            }
-            // console.log(sums)
-          }
-          
-         
-        }
-        var keys = arrayKeys(sums);
-        // console.log(keys);
-        // console.log(sums);
-        // console.log(result.length);
-        sums.mergeSort(keys);
-        resultContent ="<p>一共有"+result.length+"本书符合搜索条件，选择优先级</p>"
-        for (var i=sums.length-1;i>=0;i--){
-          resultContent =resultContent + "<p><center>" + wenti[keys[i]].name + "</center></p>";
-        }
-        // resultContent = resultContent + "<p>" + examJson[i]["question"] + "</p>";
-        // console.log(keys);
-        // console.log(sums);
-        // resultContent = resultContent + "</br>";
-        $('.searcher-result').empty();
-        $('.searcher-result').html(resultContent);
-    }
-    function uniq(array){
-      var temp = [];
-      for(var i = 0; i < array.length; i++){
-        if(temp.indexOf(array[i]) == -1){
-          temp.push(array[i]);
-        }
-      }
-      return temp;
-    }
-    function replaceIllegalStr(str) {
-     var reg;
-     var illegal_list = ["/", "\\",
-     "[", "]",
-     "{", "}",
-     "<", ">",
-     "＜", "＞",
-     "「", "」",
-     "：", "；",
-     "、", "•",
-     "^", "'", "\"",
-     "\r", "\r\n", "\\n", "\n"];
-     for (var i = 0; i < illegal_list.length; i++) {
-      if (str.indexOf(illegal_list[i]) >= 0) {
-       if (illegal_list[i] == '\\' || illegal_list[i] == '[') {
-          reg = new RegExp('\\' + illegal_list[i], "g");
-        } else {
-          reg = new RegExp(illegal_list[i], "g");
-        }
-        str = str.replace(reg, '');
-      }
-      }
-      return str.trim();
-    }
-    function mergeSort(arr, key, order) {
-        if (!isArray(arr)) return [];
-        var key = isArray(key) ? key : [];
-        // 对数组arr做若干次合并：数组arr的总长度为len，将它分为若干个长度为gap的子数组；
-        // 将"每2个相邻的子数组" 进行合并排序。
-        // len = 数组的长度，gap = 子数组的长度
-        function mergeGroups(arr, len, gap) {
-            // 对arr[0..len)做一趟归并排序
-            // 将"每2个相邻的子数组"进行合并排序
-            for (var i = 0; i + 2 * gap - 1 < len; i += gap * 2) {
-                merge(arr, i, i + gap - 1, i + 2 * gap - 1);  // 归并长度为len的两个相邻子数组
-            }
-            // 注意：
-            // 若i ≤ len - 1且i + gap - 1 ≥ len - 1时，则剩余一个子数组轮空，无须归并
-            // 若i + gap - 1 < len - 1，则剩余一个子数组没有配对
-            // 将该子数组合并到已排序的数组中
-            if (i + gap - 1 < len - 1) {                              // 尚有两个子文件，其中后一个长度小于len - 1
-                merge(arr, i, i + gap - 1, len - 1);           // 归并最后两个子数组
-            }        
-        }
-        // 核心排序过程
-        function merge(arr, start, mid, end) {
-            var i = start;      // 第1个有序区的索引，遍历区间是：arr数组中的[start..mid]
-            var j = mid + 1;    // 第2个有序区的索引，遍历区间是：arr数组中的[mid + 1..end]
-            var aTmp  = [];     // 汇总2个有序区临时数组
-            var kTmp  = [];
-            var isAsc = (order + '').toLowerCase() !== 'desc';
-            /* 排序过程开始 */
-            while (i <= mid && j <= end) {   // 遍历2个有序区，当该while循环终止时，2个有序区必然有1个已经遍历并排序完毕
-                if ((!isAsc && arr[i] <= arr[j]) || (isAsc && arr[i] >= arr[j])) {  // 并逐个从2个有序区分别取1个数进行比较，将较小的数存到临时数组aTmp中
-                    aTmp.push(arr[i]);
-                    kTmp.push(key[i++]);
-                } else {
-                    aTmp.push(arr[j]);
-                    kTmp.push(key[j++]);
-                }
-            }
-            // 将剩余有序区的剩余元素添加到临时数组aTmp中
-            while (i <= mid) {
-                aTmp.push(arr[i]);
-                kTmp.push(key[i++]);
-            }
-            while (j <= end) {
-                aTmp.push(arr[j]);
-                kTmp.push(key[j++]);
-            }
-　　　　　　  /*排序过程结束*/
-            var len = aTmp.length, k;
-            // 此时，aTmp数组是经过排序后的有序数列，然后将其重新整合到数组arr中
-            for (k = 0; k < len; k++) {  
-                arr[start + k] = aTmp[k];
-                key[start + k] = kTmp[k];
-            }
-        }
-        // 归并排序(从下往上)
-        return (function (arr) {
-            // 采用自底向上的方法，对arr[0..len)进行二路归并排序
-            var len = arr.length;
-            if (len <= 0) return arr;
-            for (var i = 1; i < len; i *= 2) {   // 共log2(len - 1)趟归并
-                mergeGroups(arr, len, i);        // 有序段长度 ≥ len时终止
-            }
-        })(arr);
-    }
-
-    // 数组原型链方法
-    Array.prototype.mergeSort = function (key, order) {
-        var key = ({}).toString.call(key) == '[object Array]' ? key : [];
-        function mergeGroups(arr, len, gap) {
-            for (var i = 0; i + 2 * gap - 1 < len; i += gap * 2) {
-                merge(arr, i, i + gap - 1, i + 2 * gap - 1);
-            }
-            if (i + gap - 1 < len - 1) {
-                merge(arr, i, i + gap - 1, len - 1);
-            }        
-        }
-        // 核心排序过程
-        function merge(arr, start, mid, end) {
-            var i = start; 
-            var j = mid + 1;
-            var aTmp = [];
-            var kTmp = [];
-            var isAsc = (order + '').toLowerCase() !== 'desc';
-            /* 排序过程开始 */
-            while (i <= mid && j <= end) { 
-                if ((isAsc && arr[i] <= arr[j]) || (!isAsc && arr[i] >= arr[j])) {
-                    aTmp.push(arr[i]);
-                    kTmp.push(key[i++]);
-                } else {
-                    aTmp.push(arr[j]);
-                    kTmp.push(key[j++]);
-                }
-            }
-            while (i <= mid) {
-                aTmp.push(arr[i]);
-                kTmp.push(key[i++]);
-            }
-            while (j <= end) {
-                aTmp.push(arr[j]);
-                kTmp.push(key[j++]);
-            }
-　　　　　　　/*排序过程结束*/
-            var len = aTmp.length, k;
-            for (k = 0; k < len; k++) {  
-                arr[start + k] = aTmp[k];
-                key[start + k] = kTmp[k];
-            }
-        }
-        // 归并排序(从下往上)
-        return (function (arr) {
-            var len = arr.length;
-            if (len <= 0) return arr;
-            for (var i = 1; i < len; i *= 2) {
-                mergeGroups(arr, len, i);
-            }
-            return arr;
-        })(this);
-    };
-    function arrayKeys(arr) {
-        var i    = 0, 
-            len  = arr.length,
-            keys = [];
-        while (i < len) {
-            keys.push(i++);
-        }
-        return keys;
-    }
-$('#menu_button').click(function(){
-  var displayStatus = $('.menu').css('display');
-  if (displayStatus == "block"){
-    $('.menu').css('display',"none");
-  }
-  else{
-    $('.menu').css('display',"block");
-  }
-  
-});
-$(document).keyup(function(event){
-  if(event.keyCode ==13){
-    $('.searcher-text').val("");
-  }
-});
-</script> 
-<p class="law">
-  内容均来自网络或自行测试得出，如有侵权，立即删除
-  <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274974079'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1274974079%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<center>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274974079'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1274974079%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
   </script>
-</p>
+</center>
 </body>
 </html>
