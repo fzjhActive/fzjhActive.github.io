@@ -542,8 +542,8 @@
 	  var family1 = '';
 	  if(family.indexOf(';') != -1){
 		var fmLst = family.split(';');
-		family = family.split(';')[0];
-		family1 = family.split(';')[1];
+		family = fmLst[0];
+		family1 = fmLst[1];
 		for(var i=0; i<skillJson.length; i++){    
 		   if((skillJson[i]["family"]==family || skillJson[i]["family"]==family1) && skillJson[i]["NameLv"]==Number(skilllevel)){
 			result.push(i)
