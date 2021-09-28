@@ -307,7 +307,7 @@
             <option value ="蓬莱岛">蓬莱岛</option>
             <option value="江湖">江湖</option>
             <option value="官府">官府</option>
-            <option value="虚渺宫">虚渺宫</option>
+            <option value="虚渺宫;天山">虚渺宫</option>
             <option value="天狼教">天狼教</option>
             <option value="崆峒">崆峒</option>
             <option value="唐门">唐门</option>
@@ -539,13 +539,28 @@
 	  }
       smart = Number(replaceIllegalStr($('.searcher-text').val()));
 
-      for(var i=0; i<skillJson.length; i++){    
-       if(skillJson[i]["family"]==family && skillJson[i]["NameLv"]==Number(skilllevel)){
-        result.push(i)
-      	}
-    //result =uniq(result);
-    //console.log(result.length);    
-  	}
+	  var family1 = '';
+	  if(family.indexOf(';') != -1){
+		var fmLst = family.split(';');
+		family = family.split(';')[0];
+		family1 = family.split(';')[1];
+		for(var i=0; i<skillJson.length; i++){    
+		   if((skillJson[i]["family"]==family || skillJson[i]["family"]==family1) && skillJson[i]["NameLv"]==Number(skilllevel)){
+			result.push(i)
+			}
+			//result =uniq(result);
+			//console.log(result.length);    
+		}
+	  }else{
+		for(var i=0; i<skillJson.length; i++){    
+		   if(skillJson[i]["family"]==family && skillJson[i]["NameLv"]==Number(skilllevel)){
+			result.push(i)
+			}
+			//result =uniq(result);
+			//console.log(result.length);    
+		}
+	  }
+      
 	  resultContent = "<table><thead><tr><th>武学</th><th>主动</th><th>使用要求</th><th>描述</th><th>效果系数</th><th>冷却时间</th><th>内力消耗</th><th>领悟方式</th><th>所需残页</th></tr></thead><tbody>"
 	  for(var j in result){
 	    var i = result[j];
