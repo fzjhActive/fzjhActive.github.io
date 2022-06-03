@@ -25,7 +25,7 @@ jobs:
           source_branch: "master"
           destination_repo: "git@github.com:fzjhActive/fzjhActive.github.io.git"
           destination_branch: "master"
-          # ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} # optional
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} # optional
           # source_ssh_private_key: ${{ secrets.SOURCE_SSH_PRIVATE_KEY }} # optional, will override `SSH_PRIVATE_KEY`
           # destination_ssh_private_key: ${{ secrets.DESTINATION_SSH_PRIVATE_KEY }} # optional, will override `SSH_PRIVATE_KEY`
     
