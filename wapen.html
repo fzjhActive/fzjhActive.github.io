@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<link rel="shortcut icon" href="img/icon.png" >
+<title>ttt</title>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/sb.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<style type="text/css">
+  .searcher {
+   background: rgba(255, 255, 255, 0);
+   width: 100%;
+   text-align: center;
+   font-size: 16px;
+ }
+ .searcher-main {
+   background: #F4F4F4;
+   border-radius: 4px;
+   line-height: 20px;
+ }
+
+ .searcher-text {
+   width: 80%;
+   text-align: center;
+   border: none;
+   outline: none;
+   background: #F4F4F4;
+
+ }
+
+ .searcher-cancel {
+   width: 10%;
+   height: 20px;
+   line-height: 20px;
+   color: #929292;
+   top: 5px;
+ }
+ .searcher-result {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
+  margin-top: 125px;
+}
+</style>
+<!--[if IE]>
+		
+		<style type="text/css">			
+			li.purchase a {
+				padding-top: 5px;
+				background-position: 0px -4px;
+			}
+			
+			li.remove_frame a {
+				padding-top: 5px;
+				background-position: 0px -3px;
+			}						
+		</style>
+		
+    <![endif]-->
+    <body>
+
+
+
+
+      <div class="menu">
+        <ul id="menu_list">
+          <li><a href="index.html">主动查询表</a></li>
+          <li><a href="exam.html">乡试与灯谜</a></li>
+          <li><a href="exam2.html">殿试辅助</a></li>
+          <li><a href="updatelog.html">更新日志</a></li>
+		  <li><a href="walkthrough.html">游戏攻略</a></li>
+        </ul>
+      </div>
+      <div class="allcontainer">
+        <div class="note">
+          <div class="title">
+            <div id="menu_button">
+              <h1>aaa</h1>
+              <div id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+          <p>
+            <center>bbb,</center>
+          </p>
+
+          <div class="searcher">
+            <p class="searcher-main">
+             <i><img src="img/search.png" width="20"/></i>
+             <input class="searcher-text" placeholder="???"></input>
+           </p>
+         </div>
+       </div>
+       <div class="searcher-result">
+       </div>
+     </div>
+     <script>
+      
+      var searchContent;
+      var resultContent;
+      var result = new Array();
+
+      $('.searcher-text').on('input', function() {
+        initSearchList();
+      });
+      function initSearchList() {
+        resultContent = "";
+        result = new Array();
+        searchContent = replaceIllegalStr($('.searcher-text').val());
+        for(var i=0; i<examJson.length; i++){
+          for(var key in examJson[i]){
+           if(examJson[i][key].indexOf(searchContent)!=-1){
+            result.push(i)
+          }
+        }
+      }
+      result =uniq(result);
+      for(var j=0;j<result.length;j++){
+        var i = result[j];
+        console.log(i);
+        if(typeof(examJson[i]["question"])!= "undefined"){
+          resultContent = resultContent + "<p>" + examJson[i]["question"] + "</p>";
+        }
+        if(typeof(examJson[i]["answer1"])!= "undefined"){
+          if(examJson[i]["answer1"] == examJson[i]["rightAnswer"]){
+            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp<b>✔" + examJson[i]["answer1"] + "</b></p>";
+          }else{
+            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp" + examJson[i]["answer1"] + "</p>";
+          }
+        }
+        if(typeof(examJson[i]["answer2"])!= "undefined"){
+          if(examJson[i]["answer2"] == examJson[i]["rightAnswer"]){
+            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp<b>✔" + examJson[i]["answer2"] + "</b></p>";
+          }else{
+            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp" + examJson[i]["answer2"] + "</p>";
+          }
+        }
+        if(typeof(examJson[i]["answer3"])!= "undefined"){
+          if(examJson[i]["answer3"] == examJson[i]["rightAnswer"]){
+            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp<b>✔" + examJson[i]["answer3"] + "</b></p>";
+          }else{
+            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp" + examJson[i]["answer3"] + "</p>";
+          }
+        }
+        if(typeof(examJson[i]["answer4"])!= "undefined"){
+          if(examJson[i]["answer4"] == examJson[i]["rightAnswer"]){
+            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp<b>✔" + examJson[i]["answer4"] + "</b></p>";
+          }else{
+            resultContent = resultContent + "<p>&nbsp&nbsp&nbsp&nbsp" + examJson[i]["answer4"] + "</p>";
+          }
+        }
+        resultContent = resultContent + "</br>";
+      }
+      $('.searcher-result').empty();
+      $('.searcher-result').html(resultContent);
+    }
+    function uniq(array){
+      var temp = [];
+      for(var i = 0; i < array.length; i++){
+        if(temp.indexOf(array[i]) == -1){
+          temp.push(array[i]);
+        }
+      }
+      return temp;
+    }
+    function replaceIllegalStr(str) {
+     var reg;
+     var illegal_list = ["/", "\\",
+     "[", "]",
+     "{", "}",
+     "<", ">",
+     "＜", "＞",
+     "「", "」",
+     "：", "；",
+     "、", "•",
+     "^", "'", "\"",
+     "\r", "\r\n", "\\n", "\n"];
+     for (var i = 0; i < illegal_list.length; i++) {
+      if (str.indexOf(illegal_list[i]) >= 0) {
+       if (illegal_list[i] == '\\' || illegal_list[i] == '[') {
+        reg = new RegExp('\\' + illegal_list[i], "g");
+      } else {
+        reg = new RegExp(illegal_list[i], "g");
+      }
+      str = str.replace(reg, '');
+    }
+  }
+  return str.trim();
+}
+$('#menu_button').click(function(){
+  var displayStatus = $('.menu').css('display');
+  if (displayStatus == "block"){
+    $('.menu').css('display',"none");
+  }
+  else{
+    $('.menu').css('display',"block");
+  }
+  
+});
+$(document).keyup(function(event){
+  if(event.keyCode ==13){
+    $('.searcher-text').val("");
+  }
+});
+
+
+function isNumber(val) {
+    var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+    var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+    if(regPos.test(val) || regNeg.test(val)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function getItemByKey(array, key, keyValue){
+	var rlt = new Array();
+	for (var i in array){
+		if (array[i][key] == keyValue){
+			rlt.push(array[i]);
+		}
+	}
+	//字符串转为浮点数
+	for (var i in rlt){
+		for(var key in rlt[i]){
+			if(isNumber(rlt[i][key])){
+				rlt[i][key] = parseFloat(rlt[i][key]);
+			}
+		}
+	}
+	return rlt;
+}
+const sortBy = function(filed,rev,primer){
+    rev = (rev)?-1:1;
+    return function(a,b){
+        a = a[filed];
+        b = b[filed];
+        if (typeof (primer) != 'undefined'){
+            a = primer(a);
+            b = primer(b);
+        }
+        if (a < b){
+            return rev * -1;
+        }
+        if(a>b){
+            return rev * 1;
+        }
+        return 1;
+    }
+};
+
+function getOnlyItemByKey(array, key, keyValue){
+	var rlt = getItemByKey(array, key, keyValue);
+	return rlt[0];
+}
+function weaponClass(){
+	var weapon = new Object;
+	//以下属性必须为归一化后的属性
+	weapon.Hurt = 0.0;
+	weapon.Yingdu = 0.0;
+	weapon.Rendu = 0.0;
+	weapon.Weigth = 0.0;
+	weapon.type = "";
+	
+	var attrs = ["Hurt", "Yingdu", "Rendu", "Weigth"];
+	var attrsCN = ["伤害力", "硬度", "韧度", "重量"];
+	function copyDict(dst, src){
+		if(dst == undefined){
+			dst = new Object;
+		}
+		for(key in src){
+			dst[key] = src[key];
+		}
+		return 0;
+	}
+	
+	function cailiaoClass(){
+		var cailiao = new Object;
+		cailiao.type = "";
+		cailiao.ID = 0;
+		for (var i of attrs){
+			cailiao[i] = new cailiaoaddClass();			
+		}
+		return cailiao;
+	};
+	function cailiaoaddClass(){
+		var temp = new Object;
+		temp.adds = 0.0;
+		temp.uplimit = 0.0;
+		temp.downlimit = 0.0;
+		
+		
+		return temp;
+	};	
+	weapon.realNums = new Array();
+	weapon.tempNums = new Array();
+	
+	weapon.wanted = [
+		{"name":"Hurt", "num":460.0, "BS":"B"},
+		{"name":"Rendu", "num":1, "BS":"B"},
+		
+		//{"name":"Yingdu", "num":0.7, "BS":"B"},
+	];
+	weapon.setAttr = function(attr, value, upLimit, downLimit){
+		if(value > 0){
+			if(weapon[attr] > upLimit){
+				//console.log(attr + ":+" + value + "=" + weapon[attr]);
+				return 0;
+			}else{
+				weapon[attr] = weapon[attr] + value;
+				//console.log(attr + ":+" + value + "=" + weapon[attr]);
+				return value;
+			}
+		}else{
+			if(weapon[attr] + value < downLimit){
+				var ret = downLimit - weapon[attr];
+				weapon[attr] = downLimit;
+				//console.log(attr + ":+" + value + "=" + weapon[attr]);
+				return ret;
+			}else{
+				weapon[attr] = weapon[attr] + value;
+				//console.log(attr + ":+" + value + "=" + weapon[attr]);
+				return value;
+			}
+		}
+	}
+	
+	weapon.tryAttr = function(attr, value, upLimit, downLimit){
+		if(value > 0){
+			if(weapon[attr] > upLimit){
+				return 0;
+			}else{
+				return value;
+			}
+		}else{
+			if(weapon[attr] < downLimit){
+				return 0;
+			}else{
+				return value;
+			}
+		}
+	}
+	
+	weapon.addHurt = function(value, upLimit, downLimit){
+		if (weapon.Hurt + value - 0.0 >= 0){
+			weapon.Hurt = weapon.Hurt + value;
+		}else{
+			weapon.Hurt = 0.0;
+		}
+		return weapon.Hurt;
+	}
+	
+	weapon.addYingdu = function(value, upLimit, downLimit){
+		if (weapon.Yingdu + value - 0.0 >= 0){
+			weapon.Yingdu = weapon.Yingdu + value;
+		}else{
+			weapon.Yingdu = 0.0;
+		}
+		return weapon.Yingdu;
+	}
+	
+	weapon.addRendu = function(value, upLimit, downLimit){
+		if (weapon.Rendu + value - 0.0 >= 0){
+			weapon.Rendu = weapon.Rendu + value;
+		}else{
+			weapon.Rendu = 0.0;
+		}
+		return weapon.Rendu;
+	}
+	
+	weapon.addWeight = function(value, upLimit, downLimit){
+		if (weapon.Weigth + value - 0.0 >= 0){
+			weapon.Weigth = weapon.Weigth + value;
+		}else{
+			weapon.Weigth = 0.0;
+		}
+		return weapon.Weigth;
+	}
+	
+	//此处是未归一化的值（从用户界面获取的）
+	//mWeapon.create(140, 49, 50, 30, "战戟");
+	weapon.create = function(nHurt, nYingdu, nRendu, nWeight, nType){
+		var limit = getOnlyItemByKey(chongzhu, "武器类型", nType);
+		if (limit == undefined){
+			return;
+		}
+		weapon.Hurt = 0.0;
+		weapon.Yingdu = 0.0;
+		weapon.Rendu = 0.0;
+		weapon.Weigth = 0.0;
+		weapon.tHurt = 0.0;
+		weapon.tYingdu = 0.0;
+		weapon.tRendu = 0.0;
+		weapon.tWeigth = 0.0;
+		weapon.type = nType;
+		weapon.initCailiao();
+		weapon.addHurt(nHurt, 460.0, 0);
+		weapon.addYingdu((nYingdu - limit.重铸硬度下限) / (limit.重铸硬度上限 - limit.重铸硬度下限), 1.0, 0);
+		weapon.addRendu((nRendu - limit.重铸韧度下限) / (limit.重铸韧度上限 - limit.重铸韧度下限), 1.0, 0);
+		weapon.addWeight(nWeight / limit.重铸重量, 460.0, 1.0, 0);
+		weapon.tHurt = weapon.Hurt;
+		weapon.tRendu = weapon.Rendu;
+		weapon.tYingdu = weapon.Yingdu;
+		weapon.tWeigth = weapon.Weigth;		
+		return 0;
+	}
+	
+	//初始化:计算各个材料归一化的增值
+	weapon.initCailiao = function(){
+		var weaponFamily = getOnlyItemByKey(weaponType, "武器类型", weapon.type);
+		var sameTypeWeapon = getItemByKey(weaponType, "类型", weaponFamily.类型);
+		var thisTypeWeapon = getOnlyItemByKey(chongzhu, "武器类型", weapon.type);
+		var thisChongzhuHurt = thisTypeWeapon["重铸伤害力"];
+		
+		for(var i in sameTypeWeapon){
+			var tempWeaponChongzhu = getOnlyItemByKey(chongzhu, "武器类型", sameTypeWeapon[i].武器类型);
+			for (var j = 0; j < 3; j++){
+				var temp = new cailiaoClass;
+				temp.type = sameTypeWeapon[i].武器类型;
+				temp.ID = j + 1;
+				var tempCailiao = getOnlyItemByKey(eval("cailiao" + (j + 1)), "武器类型", sameTypeWeapon[i].武器类型);
+				for (var attrIndex = 0; attrIndex < attrs.length; attrIndex++){
+					var Limit = getOnlyItemByKey(eval("cailiaolimit" + (j + 1)), "武器类型", sameTypeWeapon[i].武器类型);
+					var uplimit = new Object, downlimit = new Object;
+					copyDict(uplimit,Limit);
+					copyDict(downlimit,Limit);
+					if((tempWeaponChongzhu["重铸" + attrsCN[attrIndex]+"上限"]) != undefined){
+						temp[attrs[attrIndex]].adds = tempCailiao[attrsCN[attrIndex]] / (tempWeaponChongzhu["重铸" + attrsCN[attrIndex] + "上限"] - tempWeaponChongzhu["重铸" + attrsCN[attrIndex] + "下限"]);
+						//判断材料限制是上限还是下限
+						if (tempCailiao[attrsCN[attrIndex]] > 0){
+							uplimit = Limit;
+							downlimit[attrsCN[attrIndex]] = tempWeaponChongzhu["重铸" + attrsCN[attrIndex] + "下限"];
+						}else{
+							downlimit = Limit;
+							uplimit[attrsCN[attrIndex]] = 999;
+						}
+						temp[attrs[attrIndex]].uplimit = Math.max((uplimit[attrsCN[attrIndex]] - tempWeaponChongzhu["重铸" + attrsCN[attrIndex] + "下限"]), 0.0) / (tempWeaponChongzhu["重铸" + attrsCN[attrIndex] + "上限"] - tempWeaponChongzhu["重铸" + attrsCN[attrIndex] + "下限"]);
+						temp[attrs[attrIndex]].downlimit = Math.max((downlimit[attrsCN[attrIndex]] - tempWeaponChongzhu["重铸" + attrsCN[attrIndex] + "下限"]), 0.0) / (tempWeaponChongzhu["重铸" + attrsCN[attrIndex] + "上限"] - tempWeaponChongzhu["重铸" + attrsCN[attrIndex] + "下限"]);
+					}
+					else{
+						if(attrs[attrIndex] == "Hurt"){
+							temp[attrs[attrIndex]].adds = tempCailiao[attrsCN[attrIndex]] - tempWeaponChongzhu["重铸" + attrsCN[attrIndex]] + thisChongzhuHurt;
+							temp[attrs[attrIndex]].uplimit = 460.0;
+							temp[attrs[attrIndex]].downlimit = 0.0;
+						}else{
+							temp[attrs[attrIndex]].adds = tempCailiao[attrsCN[attrIndex]] / tempWeaponChongzhu["重铸" + attrsCN[attrIndex]];
+							//判断材料限制是上限还是下限
+							if (tempCailiao[attrsCN[attrIndex]] > 0){
+								uplimit = Limit;
+								downlimit[attrsCN[attrIndex]] = 0.0;
+							}else{
+								downlimit = Limit;
+								uplimit[attrsCN[attrIndex]] = 999;
+							}
+							temp[attrs[attrIndex]].uplimit = (uplimit[attrsCN[attrIndex]]) / tempWeaponChongzhu["重铸" + attrsCN[attrIndex]];
+							temp[attrs[attrIndex]].downlimit = (downlimit[attrsCN[attrIndex]]) / tempWeaponChongzhu["重铸" + attrsCN[attrIndex]];
+						}
+					}	
+				}
+				weapon.realNums.push(temp);
+			}
+			
+		}
+		return 0;
+	}
+	
+	//材料数量计算
+	weapon.cailiaoNumCal = function(){
+		var ret = new Array();
+		for(var i in weapon.wanted){
+			var list = new Array();
+			var rank = 0;
+			for (var j in weapon.realNums){
+				var temp = new Array();
+				temp["name"] = weapon.realNums[j].type + weapon.realNums[j].ID;
+				var num = (weapon.wanted[i]["num"] - weapon[weapon.wanted[i]["name"]]) / (weapon.realNums[j][weapon.wanted[i]["name"]].adds);
+				num = (num > 0)? num : Infinity;
+				temp["num"] = num
+				list.push(temp);
+			}
+			list.sort(sortBy("num", false, parseFloat));
+			ret.push(list);
+		}
+		return ret;
+	}
+	
+	weapon.viewCailiao = function(){
+		var ret = new Array();
+		var html = "";
+		for(var i in weapon.realNums){
+			html = html + "<p>" + weapon.realNums[i]["type"] + weapon.realNums[i]["ID"] + ": " +
+			weapon.realNums[i]["Hurt"]["adds"] + "; " +
+			weapon.realNums[i]["Rendu"]["adds"] + "; " +
+			weapon.realNums[i]["Yingdu"]["adds"] + "; " +
+			weapon.realNums[i]["Weigth"]["adds"] + "; " +
+			"</p>"
+		}
+		document.getElementsByClassName("searcher-result")[0].innerHTML = html;
+	}
+	
+	//贪心算法求解
+	weapon.tanxin = function(){
+		//300次淬炼
+		var clist = new Array();
+		var lastType = weapon.type;
+		var HurtScale = (getOnlyItemByKey(chongzhu, "武器类型", weapon.type)["重铸硬度上限"] - getOnlyItemByKey(chongzhu, "武器类型", weapon.type)["重铸硬度下限"]
+						+getOnlyItemByKey(chongzhu, "武器类型", weapon.type)["重铸韧度上限"] - getOnlyItemByKey(chongzhu, "武器类型", weapon.type)["重铸韧度下限"])
+						/ 2.0 / 460.0;
+		for(var i = 0; i < 300; i++){
+			var select = weapon.realNums[0];
+			var maxPoints = 0;
+			//15种材料
+			for (var j in weapon.realNums){
+				var p = weapon.wanted.length;
+				var points = 0.0;
+				var add = 0.0;
+				//k种需求
+				for (var k in weapon.wanted){
+					var temp = weapon.realNums[j][weapon.wanted[k]["name"]]["adds"];
+					add = weapon.tryAttr(weapon.wanted[k]["name"], temp, weapon.realNums[j][weapon.wanted[k]["name"]]["uplimit"], weapon.realNums[j][weapon.wanted[k]["name"]]["downlimit"]);					
+					if(weapon.wanted[k]["name"] == "Hurt"){
+						add = add * HurtScale;
+					}
+					points =  points + (p - k) * add;					
+				}
+				if (points > maxPoints){
+					if(lastType == ""){
+						lastType = weapon.realNums[j]
+					}else{
+						if(lastType != weapon.realNums[j]){
+							points = points / 2.0
+							if(points <= maxPoints){
+								continue;
+							}
+						}
+					}
+					maxPoints = points;
+					select = weapon.realNums[j];
+				}
+			}
+			clist.push(select["type"] + select["ID"]);
+			var str = "[" + i + "]:";
+			for (k in attrs){
+				var temp = weapon.setAttr(attrs[k], select[attrs[k]]["adds"], 
+								select[attrs[k]]["uplimit"], select[attrs[k]]["downlimit"]);
+				str = str + attrs[k] + "+" + temp + " ";
+			}
+			console.log(str);
+		}
+		console.log(weapon.Hurt);
+		console.log(weapon.Rendu);
+		console.log(weapon.Yingdu);
+		console.log(weapon.Weigth);
+		return clist;
+	}
+	
+	//贪心算法不重铸求解
+	weapon.tanxinSample = function(){
+		//300次淬炼
+		var start = 0;
+		var end = 300;
+		var clist = new Array();
+		var lastType = weapon.type;
+		weapon.Hurt = weapon.tHurt;
+		weapon.Rendu = weapon.tRendu;
+		weapon.Yingdu = weapon.tYingdu;
+		weapon.Weigth = weapon.tWeigth;
+		var maxAdd = {"Hurt":0,"Rendu":0,"Yingdu":0,"Weigth":0,};
+		var calRealNums = new Array();
+		for (var j in weapon.realNums){
+			if(weapon.realNums[j]["type"] == lastType){
+				calRealNums.push(weapon.realNums[j]);
+				for(k in attrs){
+					if(maxAdd[attrs[k]] < weapon.realNums[j][attrs[k]]["adds"]){
+						maxAdd[attrs[k]] = weapon.realNums[j][attrs[k]]["adds"];
+					}
+				}
+			}
+		}
+		var HurtScale = (getOnlyItemByKey(chongzhu, "武器类型", weapon.type)["重铸硬度上限"] - getOnlyItemByKey(chongzhu, "武器类型", weapon.type)["重铸硬度下限"]
+						+getOnlyItemByKey(chongzhu, "武器类型", weapon.type)["重铸韧度上限"] - getOnlyItemByKey(chongzhu, "武器类型", weapon.type)["重铸韧度下限"])
+						/ 2.0 / 460.0;
+		for(var i = start; i < end; i++){
+			var select = calRealNums[0];
+			var maxPoints = - Infinity;
+			if(i == 297){
+				i = i;
+			}
+			//15种材料
+			for (var j in calRealNums){
+				if(calRealNums[j]["type"] != lastType){
+					continue;
+				}
+				var p = weapon.wanted.length;
+				var points = 0.0;
+				var add = 0.0;
+				//k种需求
+				for (var k in weapon.wanted){
+					var temp = calRealNums[j][weapon.wanted[k]["name"]]["adds"];
+					add = weapon.tryAttr(weapon.wanted[k]["name"], temp, calRealNums[j][weapon.wanted[k]["name"]]["uplimit"], calRealNums[j][weapon.wanted[k]["name"]]["downlimit"]);					
+					//计算剩余值
+					//remains为正，代表能不够满足要求，为负表示能满足要求.
+					var remains = (Math.abs(Math.max(weapon.wanted[k]["num"] - (weapon[weapon.wanted[k]["name"]] + add), 0.0) / temp) - (end - 1 - i)) / end;
+					if(weapon.wanted[k]["name"] == "Hurt"){
+						add = add * HurtScale;
+						//remains = remains * HurtScale;
+					}
+					points =  points + (p - k) * (add - remains);
+				}
+				if (points > maxPoints){
+					if(lastType == ""){
+						lastType = calRealNums[j]
+					}else{
+						if(lastType != calRealNums[j]["type"]){
+							//points = points / 2.0
+							if(points <= maxPoints){
+								continue;
+							}
+						}
+					}
+					maxPoints = points;
+					select = calRealNums[j];
+				}
+			}
+			clist.push(select["type"] + select["ID"]);
+			var str = "[" + i + "]:";
+			for (k in attrs){
+				var temp = weapon.setAttr(attrs[k], select[attrs[k]]["adds"], 
+								select[attrs[k]]["uplimit"], select[attrs[k]]["downlimit"]);
+				str = str + attrs[k] + "+" + temp + "=" + weapon[attrs[k]] + " ";
+			}
+			console.log(str);
+		}
+		weapon.turn();
+		return clist;
+	}
+	
+	weapon.turn = function(){
+		console.log("伤害力:" + weapon.Hurt);
+		var temp = getOnlyItemByKey(chongzhu, "武器类型", weapon.type);
+		console.log("韧度:" + ((weapon.Rendu * (temp["重铸韧度上限"] - temp["重铸韧度下限"]) + temp["重铸韧度下限"])));
+		console.log("硬度:" + ((weapon.Yingdu * (temp["重铸硬度上限"] - temp["重铸硬度下限"])+ temp["重铸硬度下限"])));
+		console.log("重量:" + ((weapon.Weigth) * (temp["重铸重量"])));
+		
+	}
+	return weapon;
+};
+/*
+计算真实（去除重铸影响的）的淬炼属性增益
+
+*/
+function calRealDiff(weaponName, attrName, cailiaoIndex){
+	var chongzhuItem = getOnlyItemByKey(chongzhu, "武器类型", weaponName);
+}
+mWeapon  = new weaponClass();
+mWeapon.create(140, 40, 72, 9, "链枷");
+</script> 
+<p class="law">
+  内容均来自网络或自行测试得出，如有侵权，立即删除
+  
+</p>
+</body>
+</html>
