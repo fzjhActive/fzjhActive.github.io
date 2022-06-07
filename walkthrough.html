@@ -8,29 +8,97 @@
 <link rel="shortcut icon" href="img/icon.png" >
 <title>放置江湖攻略查看</title>
 <script src="js/jquery-3.3.1.min.js"></script>
-
+<script src="js/walkthrough.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
 <style type="text/css">
-  body {
-    margin: 0;
-    font-family: arial;
-  }
-  h1 {
-	font-size: 1.5em;
-	margin: 5%;
-  }
-  h2 {
-	font-size: 1.25em;
-	margin: 5%;
-  }
-  a {
-	word-wrap:break-word
-  }
+  .searcher {
+   background: rgba(255, 255, 255, 0);
+   width: 100%;
+   text-align: center;
+   font-size: 16px;
+ }
+ .searcher-main {
+   background: #F4F4F4;
+   border-radius: 4px;
+   line-height: 20px;
+ }
 
+ .searcher-text {
+   width: 80%;
+   text-align: center;
+   border: none;
+   outline: none;
+   background: #F4F4F4;
 
+ }
 
+ .searcher-cancel {
+   width: 10%;
+   height: 20px;
+   line-height: 20px;
+   color: #929292;
+   top: 5px;
+ }
+ .searcher-result {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
+  margin-top: 125px;
+}
+#tree{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
+  margin-top: 125px;
+}
+ ul, li {
+            list-style: none;
 
+        }
 
- 
+        ul {
+            padding-left: 20px;
+        }
+.close {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background: url("./img/close.png") no-repeat center;
+            background-size: contain;
+        }
+
+.open   {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background: url("./img/open.png") no-repeat center;
+            background-size: contain;
+        }
+
+.leaf   {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background: url("./img/leaf.png") no-repeat center;
+            background-size: contain;
+        }
+
+.leafName{
+
+            color: green;
+            padding-left: 10px;
+            padding-right: 10px;
+
+        }
+
+.openTrue{
+
+            color: gray;
+
+        }
+
 </style>
 <!--[if IE]>
 		
@@ -49,26 +117,282 @@
     <![endif]-->
     <body>
 
-	<h1><center>由于国内访问本网站时延迟较大，今后主动查询表转移至国内平台。</center></h1>
-	<h2><center>欢迎收藏新的网址<a href="https://fzjhactive.gitee.io/walkthrough">https://fzjhactive.gitee.io/</a></center></h2>
 
+
+
+      <div class="menu">
+        <ul id="menu_list">
+          <li><a href="index.html">主动查询表</a></li>
+          <li><a href="exam.html">乡试与灯谜</a></li>
+          <li><a href="exam2.html">殿试辅助</a></li>
+          <li><a href="update.html">武学更新历史记录</a></li>
+          <li><a href="updatelog.html">更新日志</a></li>
+		  <li><a href="walkthrough.html">游戏攻略</a></li>
+        </ul>
+      </div>
+      <div class="allcontainer">
+        <div class="note">
+          <div class="title">
+            <div id="menu_button">
+              <h1>放置江湖攻略查看</h1>
+              <div id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+          <p >
+            <center>可在下方搜索栏输入关键词搜索攻略，攻略会在新窗口打开或下载。欢迎加入放置江湖大玩家交流群236108111</center>
+          </p>
+
+          <div class="searcher">
+            <p class="searcher-main">
+             <i><img src="img/search.png" width="20"/></i>
+             <input class="searcher-text" placeholder="输入搜索内容"></input>
+           </p>
+         </div>
+       </div>
+	   <div id="tree"></div>
+       <!-- <div class="searcher-result">-->
+       </div>
+     </div>
+     <script>
+	 
+
+
+
+   
+
+    paintingTree(arr, "tree");
+	//paintingTree(arr, "tree");
+
+    function paintingTree(arr, id) {
+        if(arr[0]["pId"]!==undefined){
+            arr=removeEmptyFromPaintData(arr)
+        }
+        var str = ""
+        //渲染树
+        function createTree(arr) {
+            if (arr) {
+                var children = arr;
+                str += "<ul>";
+                for (var j = 0; j < children.length; j++) {
+                    str += "<li>"
+                    if (children[j]["children"]) {
+                        if (children[j]["open"]) {
+                            str += "<div open='true'><span class='close'></span><span class='openTrue'>" + children[j]["name"] + "</span></div>";
+                        } else {
+                            str += "<div open='false'><span class='open'></span><span class='openTrue'>" + children[j]["name"] + "</span></div>";
+                        }
+
+                    } else {
+						if(children[j]["bold"]){
+							str += "<div  id='leafbold'><span class='leaf' ></span><span class='leafName' style='font-weight:bolder'><a href='./walkthroughs/" + children[j]["name"] +"' target='_blank'>" + children[j]["name"] + "</a></span></div>";
+						}else{
+							str += "<div><span class='leaf'></span><span class='leafName'><a href='./walkthroughs/" + children[j]["name"] +"' target='_blank'>" + children[j]["name"] + "</a></span></div>";
+						}
+                        
+                    }
+
+                    createTree(children[j]["children"])
+                    str += "</li>"
+                }
+                str += "</ul>";
+            }
+        }
+
+        createTree(arr)
+        $("#"+id).hide()
+        $("#"+id).html(str)
+        $("[open=true]").each(function () {
+            $(this).next().show()
+        })
+        $("[open=false]").each(function () {
+            $(this).next().hide()
+        })
+        $(document).on("click", ".close", function () {
+            $(this).parent().next().hide()
+            $(this).addClass("open").removeClass("close")
+        })
+        $(document).on("click", ".open", function () {
+            $(this).parent().next().show()
+            $(this).addClass("close").removeClass("open")
+        })
+        $("#"+id).show()
+        //把简单的数据转化成渲染数据
+        function createPaintDataFromSimpleData(zNodes, Nodes) {
+            for (var i = 0; i < zNodes.length; i++) {
+                if (!!zNodes[i]) {
+                    zNodes[i]["children"] = [];
+                    for (var j = 0; j < Nodes.length; j++) {
+
+                        if (!!Nodes[j]) {
+                            if (Nodes[j]["pId"] == zNodes[i]["id"]) {
+                                if (Nodes[j]) {
+                                    zNodes[i]["children"].push(Nodes[j])
+                                    Nodes[j] = ""
+                                }
+                            }
+                        }
+                    }
+                    if (zNodes[i]["children"].length == 0) {
+                        zNodes[i]["children"] = false
+                    } else {
+                        createPaintDataFromSimpleData(zNodes[i]["children"], zNodes)
+                    }
+                }
+            }
+            return zNodes
+        }
+        //对渲染数据清除空元素
+        function removeEmptyFromPaintData(nodes) {
+            var data = createPaintDataFromSimpleData(nodes, nodes);
+            var arr = [];
+            for (var i = 0; i < data.length; i++) {
+                if (!!data[i]) {
+                    arr.push(data[i])
+                }
+            }
+            return arr
+        }
+    }
       
+      var searchContent;
+      var resultContent;
+      var result = new Array();
+	  //var findFlag=false;
+      $('.searcher-text').on('input', function() {
+	    searchContent = replaceIllegalStr($('.searcher-text').val());
+        findTree(arr);
+      });
+	  function findTree(arr1){
+		//findFlag=false;
+		findInTree(arr1);
+		//console.log(arr1);
+		paintingTree(arr1, "tree");
+		shake($("#leafbold"),4);
+		//$("#leafbold").css("font-weight","bolder");
+	  }
+	  function findInTree(arr){
+			if (arr) {
+                var children = arr;
+                var findFlag=false;
+                for (var j = 0; j < children.length; j++) {
+                    
+					findFlagSelf=false;
+					if(children[j]["children"]){//不参与搜索，继续递归
+						//console.log(children[j]["name"]+":递归搜索");
+						findFlagSelf = findInTree(children[j]["children"]);
+						//console.log(findFlag);
+						if(findFlagSelf){
+							children[j]["open"] = true;
+						}else{
+							children[j]["open"] = false;
+						}
+						findFlag = findFlagSelf || findFlag;
+					}
+					else{//参与搜索
+						//console.log(children[j]["name"]+":叶子搜索");
+						if(children[j]["name"].indexOf(searchContent)!=-1){
+							//console.log(true);
+							findFlag = true || findFlag;
+							findFlagSelf = true;
+							children[j]["bold"] = true;
+							
+						}else{
+							//console.log(false);
+							findFlag = false || findFlag;
+							findFlagSelf = false;
+							children[j]["bold"] = false;
+						}
+						if(findFlagSelf){
+							children[j]["open"] = true;
+						}else{
+							children[j]["open"] = false;
+						}
+					}
+					
+					
+                }
+				//console.log(findFlag);
+				return findFlag;
+            }
+	  }
+	  
+	  function shake(ele,times){          
+        var i = 0,t= false ,o =ele.attr("class")+" ",c ="",times=times||2;
+        if(t) return;
+        t= setInterval(function(){
+            i++;
+            if(i%2==0){
+				ele.fadeOut(200);
+			}else{
+				ele.fadeIn(200);
+			}
+            if(i==2*times){
+			
+                clearInterval(t);
+				ele.fadeIn(200);
+            }
+        },200);
+     };
+      
+    function uniq(array){
+      var temp = [];
+      for(var i = 0; i < array.length; i++){
+        if(temp.indexOf(array[i]) == -1){
+          temp.push(array[i]);
+        }
+      }
+      return temp;
+    }
+    function replaceIllegalStr(str) {
+     var reg;
+     var illegal_list = ["/", "\\",
+     "[", "]",
+     "{", "}",
+     "<", ">",
+     "＜", "＞",
+     "「", "」",
+     "：", "；",
+     "、", "•",
+     "^", "'", "\"",
+     "\r", "\r\n", "\\n", "\n"];
+     for (var i = 0; i < illegal_list.length; i++) {
+      if (str.indexOf(illegal_list[i]) >= 0) {
+       if (illegal_list[i] == '\\' || illegal_list[i] == '[') {
+        reg = new RegExp('\\' + illegal_list[i], "g");
+      } else {
+        reg = new RegExp(illegal_list[i], "g");
+      }
+      str = str.replace(reg, '');
+    }
+  }
+  return str.trim();
+}
+$('#menu_button').click(function(){
+  var displayStatus = $('.menu').css('display');
+  if (displayStatus == "block"){
+    $('.menu').css('display',"none");
+  }
+  else{
+    $('.menu').css('display',"block");
+  }
+  
+});
+$(document).keyup(function(event){
+  if(event.keyCode ==13){
+    $('.searcher-text').val("");
+  }
+});
 
+</script> 
 
-   <script>
+<p class="law">
+  内容均来自网络或自行测试得出，如有侵权，立即删除
+  <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1278253798'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1278253798%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+</p>
 
-    $(document).ready(function(){
-		if (confirm("本网站已停止更新，点击确定将跳转至新版主动查询表")){
-			window.location.href="https://fzjhactive.gitee.io/walkthrough.html";
-		}else{
-
-		}
-   });
-
-</script>
-<center>
-    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274974079'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1274974079%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-  </script>
-</center>
 </body>
 </html>
