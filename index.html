@@ -8,27 +8,73 @@
 <title>放置江湖主动查询表</title>
 <link rel="shortcut icon" href="img/icon.png" >
 <script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/activeSkill.js"></script>
+<script src="js/version.js"></script>
+<script src="js/common.js"></script>
+<script src="https://pv.sohu.com/cityjson?ie=utf-8"></script> 
 
+<link rel="stylesheet" type="text/css" href="css/style.css">
 <style type="text/css">
   body {
     margin: 0;
     font-family: arial;
   }
-  h1 {
-	font-size: 1.5em;
-	margin: 5%;
+
+
+
+
+
+
+  table {
+    border: 1px solid #ccc;
+    width: 80%;
+    margin:0;
+    padding:0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0 auto;
   }
-  h2 {
-	font-size: 1.25em;
-	margin: 5%;
-  }
-  a {
-	word-wrap:break-word
+
+  table tr {
+    border: 1px solid #ddd;
+    padding: 5px;
   }
 
+  table th, table td {
+    padding: 10px;
+    text-align: center;
+  }
 
+  table th {
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  #skilltype{
+  	font-size:8px; 
+  }
+  @media screen and (max-width: 600px) {
 
+    table {
+      border: 0;
+    }
 
+    table thead {
+      display: none;
+    }
+
+    table tr {
+      margin-bottom: 10px;
+      display: block;
+      border-bottom: 2px solid #ddd;
+    }
+
+    table td {
+      display: block;
+      text-align: right;
+      font-size: 13px;
+      border-bottom: 1px dotted #ccc;
+    }
 
     table td:last-child {
       border-bottom: 0;
@@ -356,6 +402,10 @@
 	      initSearchList();
         }
       
+     }  
+   });
+  
+
 
 
     $('.searcher-text').on('input', function() {
@@ -595,14 +645,75 @@ function onclicktr(index){
 }
 function calthisEffect(skillIndex, effectIndex, effectIndex2){
 
-    $(document).ready(function(){
-		if (confirm("本网站已停止更新，点击确定将跳转至新版主动查询表")){
-			window.location.href="https://fzjhactive.gitee.io/index.html";
+	clickFlag2= false;
+	var displayStatus = $('.calWindow').css('display');
+	console.log(displayStatus);
+      if (displayStatus == "block"){
+      	$('.calWindow').css('display',"none");
+      }
+      else{
+      	$('.calWindow').css('display',"block");
+      }
+	// $('.calWindow').css("display")="block";
+	$('.calWindow').empty();
+	var cal = new calculations();
+	if(typeof(skillJson[skillIndex]["effectGS"])==="string"){
+			calString=skillJson[skillIndex]["effectGS"];
 		}else{
-
+			calString=skillJson[skillIndex]["effectGS"][effectIndex];
 		}
-   });
+	cal.create(calString);
+	//console.log(skillIndex);
+	//console.log(effectIndex);
+	var htmlString = "";
+	var needList = Array.from(cal.needList);
+	var needListCN = Array.from(cal.needListCN);
+	for(var i=0;i<needList.length;i++){
+		var varInCookie=getCookie(needList[i]);
+		htmlString = htmlString + needListCN[i] + "<input id = \"" + needList[i]+"\" value = " + varInCookie+"></input><br/>"
 
+	}
+	var effectPart = skillJson[skillIndex]["effectAll"].split("<br/>")[effectIndex2];
+	var effectName = effectPart.slice(0,effectPart.indexOf("]")+1);
+	var effectTime = parseFloat(effectPart.slice(effectPart.indexOf("持续时间")+"持续时间".length,effectPart.indexOf("<",effectPart.indexOf("持续时间"))));
+	var effectTimeInt = MathCeil(effectTime/2.0);
+	var effectTimeStr="";
+	if(effectTimeInt>0){
+		effectTimeStr = "x" + effectTimeInt + "次（每2秒触发一次），需要一定条件触发的主动则没有固定次数";
+	}
+	htmlString = htmlString + effectName + ":\t<span id='effectCalResult'>___</span>"+ effectTimeStr+"<br/>";
+	htmlString = htmlString + "<input type='submit' onclick='calEffectFinal("+skillIndex+","+effectIndex+")' value='计算'></input><br/>";
+	htmlString = htmlString + "<input type='submit' onclick='closeCalWindow()' value='关闭'></input><br/>";
+	$('.calWindow').html(htmlString);
+}
+function calEffectFinal(skillIndex, effectIndex){
+	clickFlag2 = false;
+	clickFlag = false;
+	var cal = new calculations();
+	if(typeof(skillJson[skillIndex]["effectGS"])==="string"){
+			calString=skillJson[skillIndex]["effectGS"];
+		}else{
+			calString=skillJson[skillIndex]["effectGS"][effectIndex];
+		}
+	cal.create(calString);
+	var needList = Array.from(cal.needList);
+	var needListCN = Array.from(cal.needListCN);
+	var results = {};
+	for(var i=0;i<needList.length;i++){
+		//console.log(needList[i]);
+		//console.log(document.getElementById(needList[i]).value);
+
+		results[needList[i]] = parseInt(document.getElementById(needList[i]).value.replace(/[^\d]/g,''));
+		setCookie(needList[i], results[needList[i]],365);
+	}
+
+	var result = cal.cal(results,parseInt(skillJson[skillIndex]["cost"]));
+	$('#effectCalResult').html(result);
+	// console.log(result);
+}
+function closeCalWindow(){
+	$('.calWindow').css('display',"none");
+}
 </script>
 <p class="law">
   内容均来自网络或自行测试得出，如有侵权，立即删除。
